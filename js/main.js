@@ -10,4 +10,10 @@ function getRandomInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-getRandomInteger(5,9);
+getRandomInteger(5, 9);
+
+function checkLengthString(string, maxLength) {
+  return string.length <= maxLength;
+}
+
+checkLengthString('hello, my dear', 1);
