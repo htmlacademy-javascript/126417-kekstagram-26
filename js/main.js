@@ -1,13 +1,12 @@
 function getRandomInteger(min, max) {
-  if (min < 0 || max < 0) {
-    return undefined;
+  const lower = Math.abs(min);
+  const upper = Math.abs(max);
+
+  if (lower > upper) {
+    return Math.floor(Math.random() * (lower - upper + 1)) + upper;
   }
 
-  if (min > max) {
-    return Math.floor(Math.random() * (min - max + 1)) + max;
-  }
-
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (upper - lower + 1)) + lower;
 }
 
 getRandomInteger(5, 9);
