@@ -11,16 +11,18 @@ const getRandomInteger = (min, max) => {
 
 getRandomInteger(5, 9);
 
-const getRandomUniqueInteger = (min, max, count) => {
+const getArrayUniqueInteger = (min, max, count) => {
   const set = new Set();
-
+  let result = [];
   while (set.size < count) {
     set.add(getRandomInteger(min, max));
   }
-  return Array.from(set);
+  result = Array.from(set);
+  
+  return result[Math.floor(Math.random() * result.length)];
 };
 
-getRandomUniqueInteger(1, 25, 25);
+getArrayUniqueInteger(1, 25, 25);
 
 const checkLengthString = (string, maxLength) => {
   return string.length <= maxLength;
