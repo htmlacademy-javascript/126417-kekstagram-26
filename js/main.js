@@ -11,18 +11,20 @@ const getRandomInteger = (min, max) => {
 
 getRandomInteger(5, 9);
 
-const getArrayUniqueInteger = (min, max, count) => {
+const getRandomUniqueInteger = (min, max, count = 25) => {
   const set = new Set();
   let result = [];
+
   while (set.size < count) {
     set.add(getRandomInteger(min, max));
   }
+
   result = Array.from(set);
   
   return result[Math.floor(Math.random() * result.length)];
 };
 
-getArrayUniqueInteger(1, 25, 25);
+getRandomUniqueInteger(1, 15, 5);
 
 const checkLengthString = (string, maxLength) => {
   return string.length <= maxLength;
@@ -30,12 +32,20 @@ const checkLengthString = (string, maxLength) => {
 
 checkLengthString('hello, my dear', 1);
 
+const getUrlPhoto = () => {
+  const numberPhoto = getRandomUniqueInteger(1, 25);
+  return `photos/${numberPhoto}.jpg`;
+};
+
 const createObject = () => {
+    const uniqueId = getRandomUniqueInteger(1, 25);
+    const url = photos/{{i}}.jpg;
+
   return {
     id: ,
     url,
-    description,
-    likes,
+    description: 'Встреча рассвета',
+    likes: getRandomInteger(15, 200),
     comments: {
       id, 
       avatar, 
