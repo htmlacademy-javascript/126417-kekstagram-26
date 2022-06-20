@@ -1,4 +1,3 @@
-const POSTS_COUNT = 25;
 const ID_COUNT = 25;
 const URLS_COUNT = 25;
 const MIN_LIKES_COUNT = 15;
@@ -18,12 +17,13 @@ const DESCRIPTIONS = [
   'Описание 10'
 ];
 
-const MESSAGES = ['Всё отлично!', 
-'В целом всё неплохо. Но не всё.', 
-'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
- 'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
+const MESSAGES = ['Всё отлично!',
+  'В целом всё неплохо. Но не всё.',
+  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
+  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
+];
 
 const NAMES = [
   'Анна',
@@ -63,27 +63,18 @@ const getRandomUniqueIntegerArray = (min, max) => {
   return result;
 };
 
-const getRandomArrayElement = (elements) => {
-  return elements[getRandomInteger(0, elements.length - 1)];
-};
+const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 
-const checkLengthString = (string, maxLength) => {
-  return string.length <= maxLength;
-};
+const checkLengthString = (string, maxLength) => string.length <= maxLength;
 
 checkLengthString('hello, my dear', 1);
-
-const getAvatar = () => {
-  const avatar = getRandomUniqueInteger(1, 6);
-  return `img/avatar-${avatar}.svg`;
-};
 
 const createPost = () => {
   const idNumbers = getRandomUniqueIntegerArray(1, ID_COUNT);
   const urls = getRandomUniqueIntegerArray(1, URLS_COUNT);
   const idAvatars = getRandomUniqueIntegerArray(1, 999);
-  const avatars = getRandomUniqueIntegerArray(1, AVATARS_COUNT)
+  const avatars = getRandomUniqueIntegerArray(1, AVATARS_COUNT);
 
   return {
     id: getRandomArrayElement(idNumbers),
@@ -92,13 +83,13 @@ const createPost = () => {
     likes: getRandomInteger(MIN_LIKES_COUNT, MAX_LIKES_COUNT),
     comments: [
       {
-        id: getRandomArrayElement(idAvatars), 
-        avatar: `img/avatar-${getRandomArrayElement(avatars)}.svg`, 
-        message: getRandomArrayElement(MESSAGES), 
+        id: getRandomArrayElement(idAvatars),
+        avatar: `img/avatar-${getRandomArrayElement(avatars)}.svg`,
+        message: getRandomArrayElement(MESSAGES),
         name: getRandomArrayElement(NAMES)
       }
-  ]
+    ]
   };
 };
 
-const posts = Array.from({length: POSTS_COUNT}, createPost);
+createPost();
