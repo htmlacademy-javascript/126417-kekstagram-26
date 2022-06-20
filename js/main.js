@@ -1,3 +1,44 @@
+const POSTS_COUNT = 25;
+const ID_COUNT = 25;
+const URLS_COUNT = 25;
+const MIN_LIKES_COUNT = 15;
+const MAX_LIKES_COUNT = 200;
+const AVATARS_COUNT = 6;
+
+const DESCRIPTIONS = [
+  'Описание 1',
+  'Описание 2',
+  'Описание 3',
+  'Описание 4',
+  'Описание 5',
+  'Описание 6',
+  'Описание 7',
+  'Описание 8',
+  'Описание 9',
+  'Описание 10'
+];
+
+const MESSAGES = ['Всё отлично!', 
+'В целом всё неплохо. Но не всё.', 
+'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
+ 'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
+
+const NAMES = [
+  'Анна',
+  'Сергей',
+  'Евгений',
+  'Илья',
+  'Мария',
+  'Светлана',
+  'Дария',
+  'Николай',
+  'Дмитрий',
+  'Юрий'
+];
+
+//Функция, возвращающая случайное целое число из переданного диапазона включительно.
 const getRandomInteger = (min, max) => {
   const lower = Math.abs(min);
   const upper = Math.abs(max);
@@ -9,22 +50,23 @@ const getRandomInteger = (min, max) => {
   return Math.floor(Math.random() * (upper - lower + 1)) + lower;
 };
 
-getRandomInteger(5, 9);
-
-const getRandomUniqueInteger = (min, max, count = 25) => {
+const getRandomUniqueIntegerArray = (min, max) => {
   const set = new Set();
   let result = [];
+  const count = Math.abs(Math.abs(max) - Math.abs(min)) + 1;
 
   while (set.size < count) {
     set.add(getRandomInteger(min, max));
   }
 
   result = Array.from(set);
-  
-  return result[Math.floor(Math.random() * result.length)];
+  return result;
 };
 
-getRandomUniqueInteger(1, 15, 5);
+const getRandomArrayElement = (elements) => {
+  return elements[getRandomInteger(0, elements.length - 1)];
+};
+
 
 const checkLengthString = (string, maxLength) => {
   return string.length <= maxLength;
@@ -32,26 +74,31 @@ const checkLengthString = (string, maxLength) => {
 
 checkLengthString('hello, my dear', 1);
 
-const getUrlPhoto = () => {
-  const numberPhoto = getRandomUniqueInteger(1, 25);
-  return `photos/${numberPhoto}.jpg`;
+const getAvatar = () => {
+  const avatar = getRandomUniqueInteger(1, 6);
+  return `img/avatar-${avatar}.svg`;
 };
 
-const createObject = () => {
-    const uniqueId = getRandomUniqueInteger(1, 25);
-    const url = photos/{{i}}.jpg;
+const createPost = () => {
+  const idNumbers = getRandomUniqueIntegerArray(1, ID_COUNT);
+  const urls = getRandomUniqueIntegerArray(1, URLS_COUNT);
+  const idAvatars = getRandomUniqueIntegerArray(1, 999);
+  const avatars = getRandomUniqueIntegerArray(1, AVATARS_COUNT)
 
   return {
-    id: ,
-    url,
-    description: 'Встреча рассвета',
-    likes: getRandomInteger(15, 200),
-    comments: {
-      id, 
-      avatar, 
-      img, 
-      message, 
-      name
-    }
+    id: getRandomArrayElement(idNumbers),
+    url: `photos/${getRandomArrayElement(urls)}.jpg`,
+    description: getRandomArrayElement(DESCRIPTIONS),
+    likes: getRandomInteger(MIN_LIKES_COUNT, MAX_LIKES_COUNT),
+    comments: [
+      {
+        id: getRandomArrayElement(idAvatars), 
+        avatar: `img/avatar-${getRandomArrayElement(avatars)}.svg`, 
+        message: getRandomArrayElement(MESSAGES), 
+        name: getRandomArrayElement(NAMES)
+      }
+  ]
   };
 };
+
+const posts = Array.from({length: POSTS_COUNT}, createPost);
