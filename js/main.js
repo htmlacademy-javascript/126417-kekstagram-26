@@ -1,5 +1,4 @@
-const ID_COUNT = 25;
-const URLS_COUNT = 25;
+const PHOTOS_COUNT = 25;
 const MIN_LIKES_COUNT = 15;
 const MAX_LIKES_COUNT = 200;
 const AVATARS_COUNT = 6;
@@ -38,7 +37,6 @@ const NAMES = [
   'Юрий'
 ];
 
-//Функция, возвращающая случайное целое число из переданного диапазона включительно.
 const getRandomInteger = (min, max) => {
   const lower = Math.abs(min);
   const upper = Math.abs(max);
@@ -65,31 +63,44 @@ const getRandomUniqueIntegerArray = (min, max) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-
 const checkLengthString = (string, maxLength) => string.length <= maxLength;
 
 checkLengthString('hello, my dear', 1);
 
-const createPost = () => {
-  const idNumbers = getRandomUniqueIntegerArray(1, ID_COUNT);
-  const urls = getRandomUniqueIntegerArray(1, URLS_COUNT);
-  const idAvatars = getRandomUniqueIntegerArray(1, 999);
-  const avatars = getRandomUniqueIntegerArray(1, AVATARS_COUNT);
+const generateObject = (count) => {
+  const photos = [];
+  let commentId = 1;
+  const shuffleArray = getRandomUniqueIntegerArray(1, count);
 
-  return {
-    id: getRandomArrayElement(idNumbers),
-    url: `photos/${getRandomArrayElement(urls)}.jpg`,
-    description: getRandomArrayElement(DESCRIPTIONS),
-    likes: getRandomInteger(MIN_LIKES_COUNT, MAX_LIKES_COUNT),
-    comments: [
-      {
-        id: getRandomArrayElement(idAvatars),
-        avatar: `img/avatar-${getRandomArrayElement(avatars)}.svg`,
+  for (let i = 0; i < count; i++) {
+    const comments = [];
+    const commentsCount = getRandomInteger(1, 5);
+    const photoId = shuffleArray[i];
+    const url = shuffleArray[i];
+
+    for (let j = 1; j <= commentsCount; j++) {
+      const avatarId = getRandomInteger(1, AVATARS_COUNT);
+
+      comments.push({
+        id: commentId++,
+        avatar: `img/avatar-${avatarId}.svg`,
         message: getRandomArrayElement(MESSAGES),
         name: getRandomArrayElement(NAMES)
+      });
+    }
+
+    photos.push(
+      {
+        id: photoId,
+        url:  `photos/${url}.jpg`,
+        description: getRandomArrayElement(DESCRIPTIONS),
+        likes: getRandomInteger(MIN_LIKES_COUNT, MAX_LIKES_COUNT),
+        comments: comments
       }
-    ]
-  };
+    );
+  }
+
+  return photos;
 };
 
-createPost();
+generateObject(PHOTOS_COUNT);
