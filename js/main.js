@@ -16,7 +16,8 @@ const DESCRIPTIONS = [
   'Описание 10'
 ];
 
-const MESSAGES = ['Всё отлично!',
+const MESSAGES = [
+  'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
   'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
@@ -69,27 +70,31 @@ const checkLengthString = (string, maxLength) => string.length <= maxLength;
 
 checkLengthString('hello, my dear', 1);
 
+const createComment = () => {
+  const comments = [];
+  const commentsCount = getRandomInteger(1, 5);
+  let commentId = 1;
+
+  for (let i= 1; i <= commentsCount; i++) {
+    const avatarId = getRandomInteger(1, AVATARS_COUNT);
+
+    comments.push({
+      id: commentId++,
+      avatar: `img/avatar-${avatarId}.svg`,
+      message: getRandomArrayElement(MESSAGES),
+      name: getRandomArrayElement(NAMES)
+    });
+  }
+  return comments;
+};
+
 const generateObject = (count) => {
   const photos = [];
-  let commentId = 1;
   const shuffleArray = getRandomUniqueIntegerArray(1, count);
 
   for (let i = 0; i < count; i++) {
-    const comments = [];
-    const commentsCount = getRandomInteger(1, 5);
     const photoId = shuffleArray[i];
     const url = shuffleArray[i];
-
-    for (let j = 1; j <= commentsCount; j++) {
-      const avatarId = getRandomInteger(1, AVATARS_COUNT);
-
-      comments.push({
-        id: commentId++,
-        avatar: `img/avatar-${avatarId}.svg`,
-        message: getRandomArrayElement(MESSAGES),
-        name: getRandomArrayElement(NAMES)
-      });
-    }
 
     photos.push(
       {
@@ -97,7 +102,7 @@ const generateObject = (count) => {
         url:  `photos/${url}.jpg`,
         description: getRandomArrayElement(DESCRIPTIONS),
         likes: getRandomInteger(MIN_LIKES_COUNT, MAX_LIKES_COUNT),
-        comments: comments
+        comments: createComment()
       }
     );
   }
