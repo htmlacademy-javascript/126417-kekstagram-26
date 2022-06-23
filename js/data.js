@@ -1,6 +1,3 @@
-import {getRandomInteger, getRandomUniqueIntegerArray, getRandomArrayElement} from './util.js';
-import {createComment} from './comment.js';
-
 const PHOTOS_COUNT = 25;
 const MIN_LIKES_COUNT = 15;
 const MAX_LIKES_COUNT = 200;
@@ -46,40 +43,7 @@ const NAMES = [
   'Юрий'
 ];
 
-const generatePhoto = (count) => {
-  const photos = [];
-  const shuffleArray = getRandomUniqueIntegerArray(1, count);
-
-  for (let i = 0; i < count; i++) {
-    const photoId = shuffleArray[i];
-    const url = shuffleArray[i];
-
-    photos.push(
-      {
-        id: photoId,
-        url:  `photos/${url}.jpg`,
-        description: getRandomArrayElement(DESCRIPTIONS),
-        likes: getRandomInteger(MIN_LIKES_COUNT, MAX_LIKES_COUNT),
-        comments: createComment()
-      }
-    );
-  }
-
-  return photos;
+export {PHOTOS_COUNT, MIN_LIKES_COUNT, MAX_LIKES_COUNT, MIN_AVATARS_COUNT, MAX_AVATARS_COUNT,
+  MIN_COMMENTS_COUNT, MAX_COMMENTS_COUNT, MIN_MESSAGES_COUNT, MAX_MESSAGES_COUNT, DESCRIPTIONS,
+  MESSAGES, NAMES
 };
-
-generatePhoto(PHOTOS_COUNT);
-
-export {
-  MIN_AVATARS_COUNT,
-  MAX_AVATARS_COUNT,
-  MIN_COMMENTS_COUNT,
-  MAX_COMMENTS_COUNT,
-  MIN_MESSAGES_COUNT,
-  MAX_MESSAGES_COUNT,
-  MESSAGES,
-  NAMES,
-  generatePhoto
-};
-
-
