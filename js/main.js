@@ -70,18 +70,27 @@ const checkLengthString = (string, maxLength) => string.length <= maxLength;
 
 checkLengthString('hello, my dear', 1);
 
+const createMessage = () => {
+  const messageCount = getRandomInteger(1, 2);
+  const message = [];
+  for (let i = 1; i <= messageCount; i++ ) {
+    message.push(getRandomArrayElement(MESSAGES));
+  }
+  return message.join(' ');
+};
+
 const createComment = () => {
   const comments = [];
   const commentsCount = getRandomInteger(1, 5);
   let commentId = 1;
 
-  for (let i= 1; i <= commentsCount; i++) {
+  for (let i = 1; i <= commentsCount; i++) {
     const avatarId = getRandomInteger(1, AVATARS_COUNT);
 
     comments.push({
       id: commentId++,
       avatar: `img/avatar-${avatarId}.svg`,
-      message: getRandomArrayElement(MESSAGES),
+      message: createMessage(),
       name: getRandomArrayElement(NAMES)
     });
   }
