@@ -1,7 +1,12 @@
 const PHOTOS_COUNT = 25;
 const MIN_LIKES_COUNT = 15;
 const MAX_LIKES_COUNT = 200;
-const AVATARS_COUNT = 6;
+const MIN_AVATARS_COUNT = 1;
+const MAX_AVATARS_COUNT = 6;
+const MIN_COMMENTS_COUNT = 1;
+const MAX_COMMENTS_COUNT = 5;
+const MIN_MESSAGES_COUNT = 1;
+const MAX_MESSAGES_COUNT = 2;
 
 const DESCRIPTIONS = [
   'Описание 1',
@@ -71,7 +76,7 @@ const checkLengthString = (string, maxLength) => string.length <= maxLength;
 checkLengthString('hello, my dear', 1);
 
 const createMessage = () => {
-  const messageCount = getRandomInteger(1, 2);
+  const messageCount = getRandomInteger(MIN_MESSAGES_COUNT, MAX_MESSAGES_COUNT);
   const message = [];
   for (let i = 1; i <= messageCount; i++ ) {
     message.push(getRandomArrayElement(MESSAGES));
@@ -81,11 +86,11 @@ const createMessage = () => {
 
 const createComment = () => {
   const comments = [];
-  const commentsCount = getRandomInteger(1, 5);
+  const commentsCount = getRandomInteger(MIN_COMMENTS_COUNT, MAX_COMMENTS_COUNT);
   let commentId = 1;
 
   for (let i = 1; i <= commentsCount; i++) {
-    const avatarId = getRandomInteger(1, AVATARS_COUNT);
+    const avatarId = getRandomInteger(MIN_AVATARS_COUNT, MAX_AVATARS_COUNT);
 
     comments.push({
       id: commentId++,
