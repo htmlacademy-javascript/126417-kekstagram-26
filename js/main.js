@@ -38,11 +38,13 @@ const NAMES = [
 ];
 
 const getRandomInteger = (min, max) => {
-  const lower = Math.abs(min);
-  const upper = Math.abs(max);
+  let lower = Math.abs(min);
+  let upper = Math.abs(max);
 
   if (lower > upper) {
-    return Math.floor(Math.random() * (lower - upper + 1)) + upper;
+    const changeLower = lower;
+    lower = upper;
+    upper = changeLower;
   }
 
   return Math.floor(Math.random() * (upper - lower + 1)) + lower;
