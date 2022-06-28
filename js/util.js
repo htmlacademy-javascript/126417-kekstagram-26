@@ -13,15 +13,14 @@ const getRandomInteger = (min, max) => {
 
 const getRandomUniqueIntegerArray = (min, max) => {
   const set = new Set();
-  let result = [];
   const count = Math.abs(Math.abs(max) - Math.abs(min)) + 1;
 
   while (set.size < count) {
     set.add(getRandomInteger(min, max));
   }
 
-  result = Array.from(set);
-  return result;
+  return Array.from(set);
+
 };
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
