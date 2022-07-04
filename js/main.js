@@ -1,3 +1,4 @@
+import {PHOTOS_COUNT} from './data.js';
 import {generatePhoto} from './generate-photo.js';
 
-generatePhoto(2);
+console.log(generatePhoto(PHOTOS_COUNT));

@@ -2,19 +2,20 @@ import {getRandomInteger, getRandomArrayElement} from './util.js';
 import {MIN_AVATARS_COUNT, MAX_AVATARS_COUNT, MIN_COMMENTS_COUNT, MAX_COMMENTS_COUNT,
   MIN_MESSAGES_COUNT, MAX_MESSAGES_COUNT, MESSAGES, NAMES} from './data.js';
 
+let commentId = 1;
+
 const createMessage = () => {
   const messageCount = getRandomInteger(MIN_MESSAGES_COUNT, MAX_MESSAGES_COUNT);
-  const message = [];
+  const messages = [];
   for (let i = 1; i <= messageCount; i++ ) {
-    message.push(getRandomArrayElement(MESSAGES));
+    messages.push(getRandomArrayElement(MESSAGES));
   }
-  return message.join(' ');
+  return messages.join(' ');
 };
 
 const createComment = () => {
   const comments = [];
   const commentsCount = getRandomInteger(MIN_COMMENTS_COUNT, MAX_COMMENTS_COUNT);
-  let commentId = 1;
 
   for (let i = 1; i <= commentsCount; i++) {
     const avatarId = getRandomInteger(MIN_AVATARS_COUNT, MAX_AVATARS_COUNT);
