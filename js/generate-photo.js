@@ -2,7 +2,6 @@ import {getRandomInteger, getRandomUniqueIntegerArray, getRandomArrayElement} fr
 import {createComment} from './comment.js';
 import {PHOTOS_COUNT, MIN_LIKES_COUNT, MAX_LIKES_COUNT, DESCRIPTIONS} from './data.js';
 
-
 const generatePhoto = (count) => {
   const photos = [];
   const shuffleArray = getRandomUniqueIntegerArray(1, count);
