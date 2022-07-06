@@ -63,7 +63,7 @@ const createCommentsList = (comments) => {
 
 const fillDataBigPicture = (photo) => {
   const {url, description, likes, comments} = photo;
-  bigPictureImgElement.children[0].src = url;
+  bigPictureImgElement.querySelector('img').src = url;
   descriptionPhotoElement.textContent = description;
   likesCountElement.textContent = likes;
   commentsCounterElement.textContent = `${comments.length} из ${totalCommentsCountElement.textContent} комментариев`;
