@@ -58,7 +58,7 @@ const createCommentsList = (comments) => {
 
     commentFragment.append(newCommentElement);
   });
-
+  commentsContainerElement.innerHTML = '';
   commentsContainerElement.append(commentFragment);
 };
 
