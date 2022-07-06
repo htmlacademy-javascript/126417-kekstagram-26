@@ -1,4 +1,5 @@
 import {isEscapeKey} from './util.js';
+import {AVATAR_WIDTH, AVATAR_HEIGHT} from './data.js';
 
 const bodyElement = document.querySelector('body');
 const bigPictureElement = document.querySelector('.big-picture');
@@ -50,8 +51,8 @@ const createCommentsList = (comments) => {
     const commentTextElement = newCommentElement.querySelector('.social__text');
     authorCommentElement.src = item.avatar;
     authorCommentElement.alt = item.name;
-    authorCommentElement.width = '35';// магические числа
-    authorCommentElement.height ='35';
+    authorCommentElement.width = AVATAR_WIDTH;
+    authorCommentElement.height = AVATAR_HEIGHT;
 
     commentTextElement.textContent = item.message;
 
