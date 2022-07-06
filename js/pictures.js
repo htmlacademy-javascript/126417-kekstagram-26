@@ -1,5 +1,6 @@
 import {generatePhoto} from './generate-photo.js';
 import {PHOTOS_COUNT} from './data.js';
+import {createCommentsList, fillDataBigPicture} from './big-picture.js';
 
 const galleryPhotos = generatePhoto(PHOTOS_COUNT);
 const pictureListElement = document.querySelector('.pictures');
@@ -14,6 +15,13 @@ galleryPhotos.forEach((photo) => {
   pictureElement.querySelector('.picture__img').alt = description;
   pictureElement.querySelector('.picture__likes').textContent = likes;
   pictureElement.querySelector('.picture__comments').textContent = comments.length;
+
+  pictureElement.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    fillDataBigPicture(photo);
+
+    createCommentsList(comments);
+  });
 
   pictureListFragment.append(pictureElement);
 }
