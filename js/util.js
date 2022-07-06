@@ -29,4 +29,6 @@ const checkLengthString = (string, maxLength) => string.length <= maxLength;
 
 checkLengthString('hello, my dear', 1);
 
-export {getRandomInteger, getRandomUniqueIntegerArray, getRandomArrayElement};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {getRandomInteger, getRandomUniqueIntegerArray, getRandomArrayElement, isEscapeKey};
