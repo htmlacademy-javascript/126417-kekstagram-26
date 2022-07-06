@@ -21,7 +21,6 @@ const onBigPictureEscKeydown = (evt) => {
   }
 };
 
-
 const openBigPicture = () => {
   bigPictureElement.classList.remove('hidden');
   bodyElement.classList.add('.modal-open');
@@ -29,10 +28,11 @@ const openBigPicture = () => {
   commentsLoaderElement.classList.add('.hidden');
 
   document.addEventListener('keydown', onBigPictureEscKeydown);
+
 };
 
 closeBigPicture = () => {
-  bigPictureElement.classList.remove('hidden');
+  bigPictureElement.classList.add('hidden');
   bodyElement.classList.remove('.modal-open');
   document.removeEventListener('keydown', onBigPictureEscKeydown);
 };
@@ -68,7 +68,6 @@ const fillDataBigPicture = (photo) => {
   likesCountElement.textContent = likes;
   commentsCounterElement.textContent = comments.length;
   openBigPicture();
-  closeBigPicture();
 };
 
 
