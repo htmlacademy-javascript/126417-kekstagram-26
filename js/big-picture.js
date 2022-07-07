@@ -44,25 +44,24 @@ closeBigPictureBtnElement.addEventListener('click', () => {
 const createCommentsList = (comments) => {
   const commentFragment = document.createDocumentFragment();
 
-  comments.forEach((item) => {
+  comments.forEach((comment) => {
     const newCommentElement = commentElement.cloneNode(true);
     const authorCommentElement = newCommentElement.querySelector('.social__picture');
     const commentTextElement = newCommentElement.querySelector('.social__text');
-    authorCommentElement.src = item.avatar;
-    authorCommentElement.alt = item.name;
+    authorCommentElement.src = comment.avatar;
+    authorCommentElement.alt = comment.name;
     authorCommentElement.width = AVATAR_WIDTH;
     authorCommentElement.height = AVATAR_HEIGHT;
 
-    commentTextElement.textContent = item.message;
+    commentTextElement.textContent = comment.message;
 
     commentFragment.append(newCommentElement);
   });
-  commentsContainerElement.innerHTML = '';
+  commentsContainerElement.textContent = '';
   commentsContainerElement.append(commentFragment);
 };
 
-const fillDataBigPicture = (photo) => {
-  const {url, description, likes, comments} = photo;
+const fillDataBigPicture = ({url, description, likes, comments}) => {
   bigPictureImgElement.querySelector('img').src = url;
   descriptionPhotoElement.textContent = description;
   likesCountElement.textContent = likes;
