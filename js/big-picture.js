@@ -42,7 +42,7 @@ closeBigPictureBtnElement.addEventListener('click', () => {
 });
 
 const createCommentsList = (comments) => {
-  const commentFragment = document.createDocumentFragment();
+  const commentFragmentElement = document.createDocumentFragment();
 
   comments.forEach((comment) => {
     const newCommentElement = commentElement.cloneNode(true);
@@ -55,10 +55,10 @@ const createCommentsList = (comments) => {
 
     commentTextElement.textContent = comment.message;
 
-    commentFragment.append(newCommentElement);
+    commentFragmentElement.append(newCommentElement);
   });
   commentsContainerElement.textContent = '';
-  commentsContainerElement.append(commentFragment);
+  commentsContainerElement.append(commentFragmentElement);
 };
 
 const fillDataBigPicture = ({url, description, likes, comments}) => {
@@ -70,4 +70,4 @@ const fillDataBigPicture = ({url, description, likes, comments}) => {
 };
 
 
-export {createCommentsList, fillDataBigPicture};
+export {createCommentsList, fillDataBigPicture, bodyElement};
