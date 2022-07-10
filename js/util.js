@@ -25,10 +25,6 @@ const getRandomUniqueIntegerArray = (min, max) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-const checkLengthString = (string, maxLength) => string.length <= maxLength;
-
-checkLengthString('hello, my dear', 1);
-
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 export {getRandomInteger, getRandomUniqueIntegerArray, getRandomArrayElement, isEscapeKey};
