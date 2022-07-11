@@ -36,4 +36,14 @@ const createChunks = (elements, chunkSize) => {
   return result;
 };
 
-export {getRandomInteger, getRandomUniqueIntegerArray, getRandomArrayElement, isEscapeKey, createChunks};
+const getCorrectWord = (number) => {
+  let word = 'комментарий';
+  if (number % 100 === 1) {
+    word = 'комментария';
+  } else {
+    word = 'комментариев';
+  }
+  return `${number} ${word}`;
+};
+
+export {getRandomInteger, getRandomUniqueIntegerArray, getRandomArrayElement, isEscapeKey, createChunks, getCorrectWord};

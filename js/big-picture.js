@@ -1,4 +1,4 @@
-import {isEscapeKey,createChunks} from './util.js';
+import {isEscapeKey,createChunks, getCorrectWord} from './util.js';
 import {AVATAR_WIDTH, AVATAR_HEIGHT} from './data.js';
 
 const COMMENTS_CHUNK_SIZE = 5;
@@ -70,6 +70,11 @@ const createLaodingCommentsList = (comments) => {
 
   const commentsChunks = createChunks(comments, COMMENTS_CHUNK_SIZE);
 
+  if (comments.length === 0) {
+    commentsCounterElement.textContent = 'Комментариев нет';
+    commentsLoaderBtnElement.classList.add('hidden');
+  }
+
   createCommentsList(commentsChunks[i]);
   loadingCommentsLength += commentsChunks[i].length;
   i++;
@@ -78,7 +83,7 @@ const createLaodingCommentsList = (comments) => {
     commentsLoaderBtnElement.classList.add('hidden');
   }
 
-  commentsCounterElement.textContent = `${loadingCommentsLength} из ${comments.length} комментариев`;
+  commentsCounterElement.textContent = `${loadingCommentsLength} из ${getCorrectWord(comments.length)}`;
 
 
   commentsLoaderBtnElement.addEventListener('click', () => {
@@ -88,7 +93,7 @@ const createLaodingCommentsList = (comments) => {
     if (commentsChunks.length <= i) {
       commentsLoaderBtnElement.classList.add('hidden');
     }
-    commentsCounterElement.textContent = `${loadingCommentsLength} из ${comments.length} комментариев`;
+    commentsCounterElement.textContent = `${loadingCommentsLength} из ${getCorrectWord(comments.length)}`;
   });
 };
 
