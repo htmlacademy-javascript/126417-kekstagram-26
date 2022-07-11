@@ -1,4 +1,4 @@
-import {createCommentsList, fillDataBigPicture} from './big-picture.js';
+import {createLaodingCommentsList, fillDataBigPicture} from './big-picture.js';
 
 const pictureListElement = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -15,8 +15,8 @@ const initPicture = (photos) => {
 
     pictureElement.addEventListener('click', (evt) => {
       evt.preventDefault();
-      fillDataBigPicture({url, description, likes, comments});
-      createCommentsList(comments);
+      fillDataBigPicture({url, description, likes});
+      createLaodingCommentsList(comments);
     });
     pictureListFragmentElement.append(pictureElement);
   }

@@ -27,4 +27,13 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomInteger, getRandomUniqueIntegerArray, getRandomArrayElement, isEscapeKey};
+const createChunks = (elements, chunkSize) => {
+  const result = [];
+
+  for (let i = 0; i < elements.length; i+=chunkSize ) {
+    result.push(elements.slice(i, i+chunkSize));
+  }
+  return result;
+};
+
+export {getRandomInteger, getRandomUniqueIntegerArray, getRandomArrayElement, isEscapeKey, createChunks};
