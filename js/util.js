@@ -27,4 +27,23 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomInteger, getRandomUniqueIntegerArray, getRandomArrayElement, isEscapeKey};
+const createChunks = (elements, chunkSize) => {
+  const result = [];
+
+  for (let i = 0; i < elements.length; i+=chunkSize ) {
+    result.push(elements.slice(i, i+chunkSize));
+  }
+  return result;
+};
+
+const getCorrectWord = (number) => {
+  let word = 'комментарий';
+  if (number % 100 === 1) {
+    word = 'комментария';
+  } else {
+    word = 'комментариев';
+  }
+  return `${number} ${word}`;
+};
+
+export {getRandomInteger, getRandomUniqueIntegerArray, getRandomArrayElement, isEscapeKey, createChunks, getCorrectWord};
