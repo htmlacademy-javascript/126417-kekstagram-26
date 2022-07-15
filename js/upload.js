@@ -1,5 +1,7 @@
 import { isEscapeKey } from './util.js';
 import { bodyElement } from './big-picture.js';
+import {scaleControlBiggerBtnElement, scaleControlSmallerBtnElement,
+  increaseScalePhoto, decreaseScalePhoto} from './scale-photo.js';
 
 const DEFAULT_IMAGE = 'img/upload-default-image.jpg';
 const MIN_HASHTAGS_COUNT = 1;
@@ -27,16 +29,21 @@ const onUpLoadOverlayEscKeydown = (evt) => {
   }
 };
 
-upLoadFileInputElement.addEventListener('change', () => {
-
+const openUpLoadOverlay = () => {
   imgUpLoadOverLayElement.classList.remove('hidden');
   bodyElement.classList.add('.modal-open');
+  scaleControlBiggerBtnElement.addEventListener('click', decreaseScalePhoto);
+  scaleControlSmallerBtnElement.addEventListener('click', increaseScalePhoto);
   document.addEventListener('keydown', onUpLoadOverlayEscKeydown);
-});
+};
+
+upLoadFileInputElement.addEventListener('change', openUpLoadOverlay);
 
 function closeUpLoadOverlay() {
   imgUpLoadOverLayElement.classList.add('hidden');
   bodyElement.classList.remove('.modal-open');
+  scaleControlBiggerBtnElement.removeEventListener('click', decreaseScalePhoto);
+  scaleControlSmallerBtnElement.removeEventListener('click', increaseScalePhoto);
   document.removeEventListener('keydown', onUpLoadOverlayEscKeydown);
   imgUpLoadFormElement.reset();
   upLoadFileInputElement.value = '';

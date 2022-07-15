@@ -7,25 +7,22 @@ const scaleControlSmallerBtnElement = imgUpLoadScaleElement.querySelector('.scal
 const scaleControlBiggerBtnElement = imgUpLoadScaleElement.querySelector('.scale__control--bigger');
 const imgUpLoadPreviewElement = document.querySelector('.img-upload__preview img');//дефолтное изображение
 
-const onScaleBtnClick = (evt) => {
-  const scaleElement = evt.target;
+const increaseScalePhoto = () => {
   let scaleValue = Number(scaleControlValueElement.value.replace('%', ''));
-  if (scaleElement.classList.contains('scale__control--smaller')) {
+  if (scaleValue > MIN_SCALE) {
     scaleValue -= STEP_SCALE;
-  } else if (scaleElement.classList.contains('scale__control--bigger')) {
-    scaleValue += STEP_SCALE;
-  }
-  if (scaleValue >= MIN_SCALE && scaleValue <= MAX_SCALE) {
-    imgUpLoadPreviewElement.style.transform = `scale(${scaleValue}/100)`;
+    imgUpLoadPreviewElement.style.transform = `scale(${scaleValue/100})`;
     scaleControlValueElement.value = `${String(scaleValue)}%`;
   }
 };
 
-const changeScale = () => {
-  scaleControlSmallerBtnElement.addEventListener('click', onScaleBtnClick);
-  scaleControlBiggerBtnElement.addEventListener('click', onScaleBtnClick);
+const decreaseScalePhoto = () => {
+  let scaleValue = Number(scaleControlValueElement.value.replace('%', ''));
+  if (scaleValue < MAX_SCALE ) {
+    scaleValue += STEP_SCALE;
+    imgUpLoadPreviewElement.style.transform = `scale(${scaleValue/100})`;
+    scaleControlValueElement.value = `${String(scaleValue)}%`;
+  }
 };
 
-
-export {changeScale, imgUpLoadPreviewElement};
-
+export {scaleControlBiggerBtnElement, scaleControlSmallerBtnElement, increaseScalePhoto, decreaseScalePhoto};
