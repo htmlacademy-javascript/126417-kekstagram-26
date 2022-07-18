@@ -2,6 +2,7 @@ import { isEscapeKey } from './util.js';
 import { bodyElement } from './big-picture.js';
 import {scaleControlBiggerBtnElement, scaleControlSmallerBtnElement,
   increaseScalePhoto, decreaseScalePhoto} from './scale-photo.js';
+import {createSlider, destroySlider } from './effect-photo.js';
 
 const DEFAULT_IMAGE = 'img/upload-default-image.jpg';
 const MIN_HASHTAGS_COUNT = 1;
@@ -32,6 +33,7 @@ const onUpLoadOverlayEscKeydown = (evt) => {
 const openUpLoadOverlay = () => {
   imgUpLoadOverLayElement.classList.remove('hidden');
   bodyElement.classList.add('.modal-open');
+  createSlider();
   scaleControlBiggerBtnElement.addEventListener('click', decreaseScalePhoto);
   scaleControlSmallerBtnElement.addEventListener('click', increaseScalePhoto);
   document.addEventListener('keydown', onUpLoadOverlayEscKeydown);
@@ -42,6 +44,7 @@ upLoadFileInputElement.addEventListener('change', openUpLoadOverlay);
 function closeUpLoadOverlay() {
   imgUpLoadOverLayElement.classList.add('hidden');
   bodyElement.classList.remove('.modal-open');
+  destroySlider();
   scaleControlBiggerBtnElement.removeEventListener('click', decreaseScalePhoto);
   scaleControlSmallerBtnElement.removeEventListener('click', increaseScalePhoto);
   document.removeEventListener('keydown', onUpLoadOverlayEscKeydown);

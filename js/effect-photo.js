@@ -1,105 +1,146 @@
 const imgUpLoadPreviewElement = document.querySelector('.img-upload__preview img');//дефолтное изображение
-const imgUpLoadEffectLevelElement = document.querySelector('.img-upload__effect-level');
-const effectLevelValueElement = imgUpLoadEffectLevelElement.querySelector('.effect-level__value');
-const sliderElement = imgUpLoadEffectLevelElement.querySelector('.effect-level__slider');//слайдер
-const noEffectElement = document.querySelector('#effect-none');
-const cromeEffectElement = document.querySelector('#effect-chrome');
-const sepiaEffectElement = document.querySelector('#effect-sepia');
-const marvinEffectElement = document.querySelector('#effect-marvin');
-const phobosEffectElement = document.querySelector('#effect-phobos');
-const heatEffectElement = document.querySelector('#effect-heat');
+const sliderContainerElement = document.querySelector('.img-upload__effect-level');
+const effectLevelValueElement = sliderContainerElement.querySelector('.effect-level__value');
+const sliderElement = sliderContainerElement.querySelector('.effect-level__slider');//слайдер
+const effectsListElement = document.querySelector('.effects__list');
 
 const effects = {
-  'effect-none': {
-    effectName: 'none',
+  'none': {
+    filter: 'none',
     measure: '',
-    range: {
-      min: 1,
-      max: 100,
-    },
-    start: 100,
-    step: 1,
-    connect: 'lower'
+    options: {
+      range: {
+        min: 1,
+        max: 100,
+      },
+      start: 100,
+      step: 1,
+      connect: 'lower'
+    }
   },
 
-  'effect-chrome': {
-    effectName: 'grayscale',
+  'chrome': {
+    filter: 'grayscale',
     measure: '',
-    range: {
-      min: 0,
-      max: 1,
-    },
-    start: 1,
-    step: 0.1,
-    connect: 'lower'
-
+    options: {
+      range: {
+        min: 0,
+        max: 1,
+      },
+      start: 1,
+      step: 0.1,
+      connect: 'lower'
+    }
   },
 
-  'effect-sepia': {
-    effectName: 'sepia',
+  'sepia': {
+    filter: 'sepia',
     measure: '',
-    range: {
-      min: 0,
-      max: 1,
-    },
-    start: 1,
-    step: 0.1,
-    connect: 'lower'
-
+    options: {
+      range: {
+        min: 0,
+        max: 1,
+      },
+      start: 1,
+      step: 0.1,
+      connect: 'lower'
+    }
   },
 
-  'effect-marvin': {
-    effectName: 'invert',
+  'marvin': {
+    filter: 'invert',
     measure: '%',
-    range: {
-      min: 0,
-      max: 100,
-    },
-    start: 100,
-    step: 1,
-    connect: 'lower'
+    options: {
+      range: {
+        min: 0,
+        max: 100,
+      },
+      start: 100,
+      step: 1,
+      connect: 'lower'
+    }
   },
 
-  'effect-phobos': {
-    effectName: 'blur',
+  'phobos': {
+    filter: 'blur',
     measure: 'px',
-    range: {
-      min: 0,
-      max: 3,
-    },
-    start: 3,
-    step: 0.1,
-    connect: 'lower'
+    options: {
+      range: {
+        min: 0,
+        max: 3,
+      },
+      start: 3,
+      step: 0.1,
+      connect: 'lower'
+    }
   },
 
-  'effect-heat': {
-    effectName: 'brightness',
+  'heat': {
+    filter: 'brightness',
     measure: '',
-    range: {
-      min: 1,
-      max: 3,
-    },
-    start: 3,
-    step: 0.1,
-    connect: 'lower'
+    options: {
+      range: {
+        min: 1,
+        max: 3,
+      },
+      start: 3,
+      step: 0.1,
+      connect: 'lower'
+    }
   }
 };
 
+let effect = effects.none;
 
-const effect = effects['effect-heat'];
+const applyEffectClass = (effectName) => {
+  const effectNames = Object.keys(effects);
+  const effectClasses = effectNames.map((className) => `effects__preview--${className}`);
 
-noUiSlider.create(sliderElement, effect);
+  imgUpLoadPreviewElement.classList.remove(...effectClasses);
+  imgUpLoadPreviewElement.classList.add(`effects__preview--${effectName}`);
+};
 
-sliderElement.noUiSlider.on('update', () => {
-  effectLevelValueElement.value = sliderElement.noUiSlider.get();
-  imgUpLoadPreviewElement.style.filter = `${effect.effectName}(${effectLevelValueElement.value})`;
-});
+const loadEffect = (effectName) => {
+  effect = effects[effectName];
 
+  console.log(effect);
 
+  sliderElement.noUiSlider.updateOptions(effect.options);
 
-//функцию получения ключей
-//сопоставить id с
-// const applyEffectPhoto = (evt) => {
-//   const effectElement = evt.target;
-//   if (effectElement.id ===  )
-// };
+  applyEffectClass(effectName);
+};
+
+const updateEffectValue = () => {
+  if (effect.filter === 'none') {
+    sliderContainerElement.classList.add('hidden');
+
+    imgUpLoadPreviewElement.style.filter = '';
+  } else {
+    sliderContainerElement.classList.remove('hidden');
+
+    effectLevelValueElement.value = sliderElement.noUiSlider.get();
+    imgUpLoadPreviewElement.style.filter = `${effect.filter}(${effectLevelValueElement.value}${effect.measure})`;
+  }
+};
+
+const changeTargetEffect = (evt) => {
+  loadEffect(evt.target.value);
+};
+
+const createSlider = () => {
+  noUiSlider.create(sliderElement, effect.options);
+
+  loadEffect('none');
+
+  sliderElement.noUiSlider.on('update', updateEffectValue);
+  effectsListElement.addEventListener('change', changeTargetEffect);
+};
+
+const destroySlider = () => {
+  sliderElement.noUiSlider.off('update');
+  sliderElement.noUiSlider.destroy();
+
+  effectsListElement.removeEventListener('change', changeTargetEffect);
+};
+
+export {createSlider, destroySlider};
