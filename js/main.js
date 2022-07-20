@@ -5,3 +5,4 @@ import './upload.js';
 
 generatePhoto(PHOTOS_COUNT);
 initPicture(generatePhoto(PHOTOS_COUNT));
+
