@@ -1,7 +1,7 @@
-const imgUpLoadPreviewElement = document.querySelector('.img-upload__preview img');//дефолтное изображение
+const imgUpLoadPreviewElement = document.querySelector('.img-upload__preview img');
 const sliderContainerElement = document.querySelector('.img-upload__effect-level');
 const effectLevelValueElement = sliderContainerElement.querySelector('.effect-level__value');
-const sliderElement = sliderContainerElement.querySelector('.effect-level__slider');//слайдер
+const sliderElement = sliderContainerElement.querySelector('.effect-level__slider');
 const effectsListElement = document.querySelector('.effects__list');
 
 const effects = {
@@ -103,8 +103,6 @@ const applyEffectClass = (effectName) => {
 const loadEffect = (effectName) => {
   effect = effects[effectName];
 
-  console.log(effect);
-
   sliderElement.noUiSlider.updateOptions(effect.options);
 
   applyEffectClass(effectName);
@@ -128,7 +126,15 @@ const changeTargetEffect = (evt) => {
 };
 
 const createSlider = () => {
-  noUiSlider.create(sliderElement, effect.options);
+  noUiSlider.create(sliderElement, {
+    range: {
+      min: 1,
+      max: 100,
+    },
+    start: 100,
+    step: 1,
+    connect: 'lower'
+  });
 
   loadEffect('none');
 

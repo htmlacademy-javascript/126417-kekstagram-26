@@ -5,7 +5,7 @@ const imgUpLoadScaleElement = document.querySelector('.img-upload__scale');
 const scaleControlValueElement = imgUpLoadScaleElement.querySelector('.scale__control--value');
 const scaleControlSmallerBtnElement = imgUpLoadScaleElement.querySelector('.scale__control--smaller');
 const scaleControlBiggerBtnElement = imgUpLoadScaleElement.querySelector('.scale__control--bigger');
-const imgUpLoadPreviewElement = document.querySelector('.img-upload__preview img');//дефолтное изображение
+const imgUpLoadPreviewElement = document.querySelector('.img-upload__preview img');
 
 const increaseScalePhoto = () => {
   let scaleValue = Number(scaleControlValueElement.value.replace('%', ''));
