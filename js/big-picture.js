@@ -75,26 +75,20 @@ const createLoadingCommentsList = (comments) => {
     commentsLoaderBtnElement.classList.add('hidden');
   }
 
-  createCommentsList(commentsChunks[i]);
-  loadingCommentsLength += commentsChunks[i].length;
-  i++;
-
-  if (commentsChunks.length <= i) {
-    commentsLoaderBtnElement.classList.add('hidden');
-  }
-
-  commentsCounterElement.textContent = `${loadingCommentsLength} из ${getCorrectWord(comments.length)}`;
-
-
-  commentsLoaderBtnElement.addEventListener('click', () => {
+  const appendComments = () => {
     createCommentsList(commentsChunks[i]);
     loadingCommentsLength += commentsChunks[i].length;
     i++;
     if (commentsChunks.length <= i) {
       commentsLoaderBtnElement.classList.add('hidden');
+      commentsLoaderBtnElement.removeEventListener('click', appendComments);
     }
     commentsCounterElement.textContent = `${loadingCommentsLength} из ${getCorrectWord(comments.length)}`;
-  });
+  };
+
+  commentsLoaderBtnElement.addEventListener('click', appendComments);
+
+  appendComments();
 };
 
 const fillDataBigPicture = ({url, description, likes}) => {

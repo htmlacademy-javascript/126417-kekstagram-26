@@ -4,6 +4,7 @@ const pictureListElement = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
 const initPicture = (photos) => {
+
   const pictureListFragmentElement = document.createDocumentFragment();
 
   photos.forEach(({url, description, likes, comments}) => {
