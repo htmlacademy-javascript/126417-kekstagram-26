@@ -61,7 +61,7 @@ const createCommentsList = (comments) => {
   commentsContainerElement.append(commentFragmentElement);
 };
 
-const createLaodingCommentsList = (comments) => {
+const createLoadingCommentsList = (comments) => {
   commentsContainerElement.textContent = '';
   commentsLoaderBtnElement.classList.remove('hidden');
 
@@ -105,4 +105,4 @@ const fillDataBigPicture = ({url, description, likes}) => {
   openBigPicture();
 };
 
-export {createLaodingCommentsList, fillDataBigPicture, bodyElement};
+export {createLoadingCommentsList, fillDataBigPicture, bodyElement};

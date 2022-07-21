@@ -6,3 +6,8 @@ import './upload.js';
 generatePhoto(PHOTOS_COUNT);
 initPicture(generatePhoto(PHOTOS_COUNT));
 
+fetch('https://26.javascript.pages.academy/kekstagram/data')
+  .then((response) => response.json())
+  .then((photos) => {
+    console.log(photos);
+  });
