@@ -1,9 +1,10 @@
 import {PHOTOS_COUNT} from './data.js';
+import { getData } from './api.js';
 import {initPicture} from './pictures.js';
-import './upload-form.js';
+import {setUserModalSubmit} from './user-modal.js';
 
-fetch('https://26.javascript.pages.academy/kekstagram/data')
-  .then((response) => response.json())
-  .then((photos) => {
-    initPicture(photos.slice(0, PHOTOS_COUNT));
-  });
+getData((photos) => {
+  initPicture(photos.slice(0, PHOTOS_COUNT));
+});
+
+setUserModalSubmit();
