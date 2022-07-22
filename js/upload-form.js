@@ -1,3 +1,4 @@
+import { MIN_HASHTAGS_COUNT, MAX_HASHTAGS_COUNT, MAX_LENGTH_COMMENT } from './data.js';
 import { isEscapeKey } from './util.js';
 import { bodyElement } from './big-picture.js';
 import {scaleControlBiggerBtnElement, scaleControlSmallerBtnElement,
@@ -5,9 +6,6 @@ import {scaleControlBiggerBtnElement, scaleControlSmallerBtnElement,
 import {createSlider, destroySlider } from './effect-photo.js';
 
 const DEFAULT_IMAGE = 'img/upload-default-image.jpg';
-const MIN_HASHTAGS_COUNT = 1;
-const MAX_HASHTAGS_COUNT = 5;
-const MAX_LENGTH_COMMENT = 140;
 
 const imgUpLoadFormElement = document.querySelector('.img-upload__form');
 const upLoadFileInputElement = imgUpLoadFormElement.querySelector('#upload-file');
