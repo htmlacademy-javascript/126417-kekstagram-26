@@ -1,8 +1,16 @@
-import {generatePhoto} from './generate-photo.js';
 import {PHOTOS_COUNT} from './data.js';
+import { getData } from './api.js';
 import {initPicture} from './pictures.js';
-import './upload.js';
+import { showAlert } from './util.js';
+import {setUserModalSubmit} from './user-modal.js';
 
-generatePhoto(PHOTOS_COUNT);
-initPicture(generatePhoto(PHOTOS_COUNT));
+getData(
+  (photos) => {
+    initPicture(photos.slice(0, PHOTOS_COUNT));
+  },
+  (message) => {
+    showAlert(message);
+  }
+);
 
+setUserModalSubmit();

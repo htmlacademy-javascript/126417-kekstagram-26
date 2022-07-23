@@ -1,9 +1,10 @@
-import {createLaodingCommentsList, fillDataBigPicture} from './big-picture.js';
+import {createLoadingCommentsList, fillDataBigPicture} from './big-picture.js';
 
 const pictureListElement = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
 const initPicture = (photos) => {
+
   const pictureListFragmentElement = document.createDocumentFragment();
 
   photos.forEach(({url, description, likes, comments}) => {
@@ -16,7 +17,7 @@ const initPicture = (photos) => {
     pictureElement.addEventListener('click', (evt) => {
       evt.preventDefault();
       fillDataBigPicture({url, description, likes});
-      createLaodingCommentsList(comments);
+      createLoadingCommentsList(comments);
     });
     pictureListFragmentElement.append(pictureElement);
   }

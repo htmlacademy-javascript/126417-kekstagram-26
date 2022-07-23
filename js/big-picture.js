@@ -61,7 +61,7 @@ const createCommentsList = (comments) => {
   commentsContainerElement.append(commentFragmentElement);
 };
 
-const createLaodingCommentsList = (comments) => {
+const createLoadingCommentsList = (comments) => {
   commentsContainerElement.textContent = '';
   commentsLoaderBtnElement.classList.remove('hidden');
 
@@ -75,26 +75,20 @@ const createLaodingCommentsList = (comments) => {
     commentsLoaderBtnElement.classList.add('hidden');
   }
 
-  createCommentsList(commentsChunks[i]);
-  loadingCommentsLength += commentsChunks[i].length;
-  i++;
-
-  if (commentsChunks.length <= i) {
-    commentsLoaderBtnElement.classList.add('hidden');
-  }
-
-  commentsCounterElement.textContent = `${loadingCommentsLength} из ${getCorrectWord(comments.length)}`;
-
-
-  commentsLoaderBtnElement.addEventListener('click', () => {
+  const appendComments = () => {
     createCommentsList(commentsChunks[i]);
     loadingCommentsLength += commentsChunks[i].length;
     i++;
     if (commentsChunks.length <= i) {
       commentsLoaderBtnElement.classList.add('hidden');
+      commentsLoaderBtnElement.removeEventListener('click', appendComments);
     }
     commentsCounterElement.textContent = `${loadingCommentsLength} из ${getCorrectWord(comments.length)}`;
-  });
+  };
+
+  commentsLoaderBtnElement.addEventListener('click', appendComments);
+
+  appendComments();
 };
 
 const fillDataBigPicture = ({url, description, likes}) => {
@@ -105,4 +99,4 @@ const fillDataBigPicture = ({url, description, likes}) => {
   openBigPicture();
 };
 
-export {createLaodingCommentsList, fillDataBigPicture, bodyElement};
+export {createLoadingCommentsList, fillDataBigPicture, bodyElement};
