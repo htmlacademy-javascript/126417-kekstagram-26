@@ -1,5 +1,6 @@
 import { isEscapeKey } from './util.js';
 
+const Z_INDEX = 10;
 const bodyElement = document.querySelector('body');
 
 const showStatusModal = (type) => {
@@ -7,6 +8,8 @@ const showStatusModal = (type) => {
     .content.querySelector(`.${type}`);
   const statusModalElement = statusTemplateElement.cloneNode(true);
   const statusButtonElement = statusModalElement.querySelector(`.${type}__button`);
+  statusModalElement.style.zIndex = Z_INDEX;
+
   bodyElement.append(statusModalElement);
 
   const onStatusModalEscKeydown = (evt) => {
@@ -28,7 +31,7 @@ const showStatusModal = (type) => {
     closeStatusMessageModal();
   });
 
-  document.addEventListener('keydown', onStatusModalEscKeydown, );
+  document.addEventListener('keydown', onStatusModalEscKeydown);
   document.addEventListener('click', onBackDropClick);
 
   function closeStatusMessageModal () {
