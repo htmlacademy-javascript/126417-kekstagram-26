@@ -46,4 +46,20 @@ const getCorrectWord = (number) => {
   return `${number} ${word}`;
 };
 
-export {getRandomInteger, getRandomUniqueIntegerArray, getRandomArrayElement, isEscapeKey, createChunks, getCorrectWord};
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.classList.add('alert');
+
+  const alertMessage = document.createElement('p');
+  alertMessage.classList.add('alert__message');
+  alertMessage.textContent = message;
+
+  alertContainer.append(alertMessage);
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, 5000);
+};
+
+export {getRandomInteger, getRandomUniqueIntegerArray, getRandomArrayElement, isEscapeKey, createChunks, getCorrectWord, showAlert};

@@ -5,7 +5,7 @@ import {scaleControlBiggerBtnElement, scaleControlSmallerBtnElement,
 import {createSlider, destroySlider } from './effect-photo.js';
 import { validateUploadForm } from './validate-form.js';
 import { sendData } from './api.js';
-import { showSuccessModal, showErrorModal} from './status-upload.js';
+import {showStatusModal} from './status-upload.js';
 
 const DEFAULT_IMAGE = 'img/upload-default-image.jpg';
 
@@ -65,7 +65,7 @@ const blockSubmitButton = () => {
 };
 
 const unblockSubmitButton = () => {
-  imgUpLoadSubmitBtnElement.removetAttribute('disabled', true);
+  imgUpLoadSubmitBtnElement.removeAttribute('disabled', true);
   imgUpLoadSubmitBtnElement.textContent = 'Опубликовать';
 };
 
@@ -79,11 +79,12 @@ const setUserModalSubmit = () => {
         () => {
           unblockSubmitButton();
           closeUpLoadModal();
-          showSuccessModal();
+          showStatusModal('success');
         },
         () => {
           blockSubmitButton();
-          showErrorModal();
+          showStatusModal('error');
+          unblockSubmitButton();
         },
         new FormData(evt.target),
       );
