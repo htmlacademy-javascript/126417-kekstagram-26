@@ -28,7 +28,7 @@ const showStatusModal = (type) => {
     closeStatusMessageModal();
   });
 
-  document.addEventListener('keydown', onStatusModalEscKeydown);
+  document.addEventListener('keydown', onStatusModalEscKeydown, );
   document.addEventListener('click', onBackDropClick);
 
   function closeStatusMessageModal () {
