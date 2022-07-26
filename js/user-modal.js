@@ -6,6 +6,7 @@ import {createSlider, destroySlider } from './effect-photo.js';
 import { validateUploadForm } from './validate-form.js';
 import { sendData } from './api.js';
 import {showStatusModal} from './status-upload.js';
+import { uploadNewPhoto } from './upload-photo.js';
 
 const DEFAULT_IMAGE = 'img/upload-default-image.jpg';
 
@@ -37,6 +38,7 @@ const openUpLoadModal = () => {
   scaleControlBiggerBtnElement.addEventListener('click', decreaseScalePhoto);
   scaleControlSmallerBtnElement.addEventListener('click', increaseScalePhoto);
   document.addEventListener('keydown', onUpLoadModalEscKeydown);
+  uploadNewPhoto();
 };
 
 
@@ -51,7 +53,6 @@ function closeUpLoadModal() {
   document.removeEventListener('keydown', onUpLoadModalEscKeydown);
   imgUpLoadFormElement.reset();
   upLoadFileInputElement.value = '';
-  imgUpLoadPreviewElement.src = DEFAULT_IMAGE;
 }
 
 imgUpLoadCancelBtnElement.addEventListener('click', () => {
