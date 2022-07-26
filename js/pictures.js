@@ -3,7 +3,7 @@ import {createLoadingCommentsList, fillDataBigPicture} from './big-picture.js';
 const pictureListElement = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-const initPicture = (photos) => {
+const initPictures = (photos) => {
 
   const pictureListFragmentElement = document.createDocumentFragment();
 
@@ -23,6 +23,7 @@ const initPicture = (photos) => {
   }
   );
   pictureListElement.append(pictureListFragmentElement);
+
 };
 
-export {initPicture};
+export {initPictures};
