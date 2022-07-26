@@ -1,7 +1,6 @@
 import {isEscapeKey,createChunks, getCorrectWord} from './util.js';
-import {AVATAR_WIDTH, AVATAR_HEIGHT} from './data.js';
+import {AVATAR_WIDTH, AVATAR_HEIGHT, COMMENTS_CHUNK_SIZE} from './data.js';
 
-const COMMENTS_CHUNK_SIZE = 5;
 const bodyElement = document.querySelector('body');
 const bigPictureElement = document.querySelector('.big-picture');
 const bigPictureImgElement  = bigPictureElement.querySelector('.big-picture__img');
