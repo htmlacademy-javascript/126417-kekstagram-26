@@ -1,13 +1,14 @@
-import {initPicture} from './pictures.js';
 import { getRandomUniqueIntegerArray, debounce } from './util.js';
-import { MIN_UNIQUE_PHOTOS_COUNT, MAX_UNIQUE_PHOTOS_COUNT, RERENDER_DELAY} from './data.js';
+import {MIN_UNIQUE_PHOTOS_COUNT, MAX_UNIQUE_PHOTOS_COUNT, RERENDER_DELAY} from './data.js';
+import {initPictures} from './pictures.js';
 
 const imgFiltersElement = document.querySelector('.img-filters');
+const imgFiltersButtonsElement = imgFiltersElement.querySelectorAll('.img-filters__button');
 const imgFiltersDefaultButtonElement = imgFiltersElement.querySelector('#filter-default');
 const imgFiltersRandomButtonElement = imgFiltersElement.querySelector('#filter-random');
 const imgFiltersDiscussedButtonElement = imgFiltersElement.querySelector('#filter-discussed');
 
-const getDefaultPhotos = (photos) => photos;
+const getDefaultPhotos = (photos) => photos.slice();
 
 const getRandomUniquePhotos = (photos) => {
   const minIndex = MIN_UNIQUE_PHOTOS_COUNT - 1;
@@ -23,34 +24,53 @@ const getRandomUniquePhotos = (photos) => {
   return uniquePhotos.slice(MIN_UNIQUE_PHOTOS_COUNT, MAX_UNIQUE_PHOTOS_COUNT + 1);
 };
 
-const getDisscussedPhotos = (photos) => {
+const getDiscussedPhotos = (photos) => {
+  console.log(1);
   photos.slice().sort((currentPhoto, nextPhoto) => nextPhoto.comments.length - currentPhoto.comments.length);
+  console.log(2);
 };
 
-const changeFilter = (activeFilter) => {
-  if (!imgFiltersElement.querySelector(`#filter-${activeFilter}`).classList.contains('img-filters__button--active')) {
-    imgFiltersElement.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
-    imgFiltersElement.querySelector(`#filter-${activeFilter}`).classList.add('img-filters__button--active');
-  }
+const changeActiveClass = (evt) => {
+  imgFiltersButtonsElement.forEach((button) => {
+    button.classList.remove('img-filters__button--active');
+  });
+
+  evt.target.classList.add('img-filters__button--active');
 };
 
-const addFilter = (photos) => {
+const clearPhotos = () => {
+  const pictureElements = document.querySelectorAll('.picture');
+
+  pictureElements.forEach((picture) => {
+    picture.remove();
+  });
+};
+
+const updatePhotos = (photos) => {
+  clearPhotos();
+  initPictures(photos);
+};
+
+const debouncePhotos = debounce(updatePhotos, RERENDER_DELAY);
+
+const applyFilter = (photos) => {
   imgFiltersElement.classList.remove('img-filters--inactive');
 
-  imgFiltersDefaultButtonElement.addEventListener('click', debounce(() => {
-    changeFilter('default');
-    initPicture(getDefaultPhotos(photos));
-  }, RERENDER_DELAY));
+  imgFiltersButtonsElement.forEach((button) => {
+    button.addEventListener('click', changeActiveClass);
+  });
 
-  imgFiltersRandomButtonElement.addEventListener('click', debounce(() => {
-    changeFilter('random');
-    initPicture(getRandomUniquePhotos(photos));
-  }, RERENDER_DELAY));
+  imgFiltersDefaultButtonElement.addEventListener('click', () => {
+    debouncePhotos(getDefaultPhotos(photos));
+  });
 
-  imgFiltersRandomButtonElement.addEventListener('click', debounce(() => {
-    changeFilter('discussed');
-    initPicture(getDisscussedPhotos(photos));
-  }, RERENDER_DELAY));
+  imgFiltersRandomButtonElement.addEventListener('click', () => {
+    debouncePhotos(getRandomUniquePhotos(photos));
+  });
+
+  imgFiltersDiscussedButtonElement.addEventListener('click', () => {
+    debouncePhotos(getDiscussedPhotos(photos));
+  });
 };
 
-export {addFilter};
+export {applyFilter};

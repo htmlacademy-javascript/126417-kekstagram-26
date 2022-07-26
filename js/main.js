@@ -1,13 +1,15 @@
-import {PHOTOS_COUNT} from './data.js';
+import { PHOTOS_COUNT } from './data.js';
 import { getData } from './api.js';
-import {initPicture} from './pictures.js';
+import {initPictures} from './pictures.js';
+import {applyFilter} from './filters.js';
 import { showAlert } from './util.js';
 import {setUserModalSubmit} from './user-modal.js';
-import {addFilter} from './filters';
+
 
 getData(
   (photos) => {
-    initPicture(photos.slice(0, PHOTOS_COUNT));
+    initPictures(photos.slice(0, PHOTOS_COUNT));
+    applyFilter(photos);
   },
   (message) => {
     showAlert(message);
@@ -15,4 +17,4 @@ getData(
 );
 
 setUserModalSubmit();
-addFilter();
+
