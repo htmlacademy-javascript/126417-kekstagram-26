@@ -70,6 +70,7 @@ const unblockSubmitButton = () => {
 const setUserModalSubmit = () => {
   imgUpLoadFormElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
+    blockSubmitButton();
 
     const isValid = validateUploadForm();
     if (isValid) {

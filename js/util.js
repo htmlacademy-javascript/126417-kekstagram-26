@@ -1,3 +1,5 @@
+import { ALERT_SHOW_TIME } from './data.js';
+
 const getRandomInteger = (min, max) => {
   let lower = Math.abs(min);
   let upper = Math.abs(max);
@@ -22,8 +24,6 @@ const getRandomUniqueIntegerArray = (min, max) => {
   return Array.from(set);
 
 };
-
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
@@ -59,7 +59,7 @@ const showAlert = (message) => {
 
   setTimeout(() => {
     alertContainer.remove();
-  }, 5000);
+  }, ALERT_SHOW_TIME);
 };
 
 const debounce = (callback, timeoutDelay) => {
@@ -71,9 +71,7 @@ const debounce = (callback, timeoutDelay) => {
   };
 };
 
-export {getRandomInteger,
-  getRandomUniqueIntegerArray,
-  getRandomArrayElement,
+export {getRandomUniqueIntegerArray,
   isEscapeKey,
   createChunks,
   getCorrectWord,

@@ -1,14 +1,14 @@
 import {createLoadingCommentsList, fillDataBigPicture} from './big-picture.js';
 
 const pictureListElement = document.querySelector('.pictures');
-const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const pictureTemplateElement = document.querySelector('#picture').content.querySelector('.picture');
 
 const initPictures = (photos) => {
 
   const pictureListFragmentElement = document.createDocumentFragment();
 
   photos.forEach(({url, description, likes, comments}) => {
-    const pictureElement = pictureTemplate.cloneNode(true);
+    const pictureElement = pictureTemplateElement.cloneNode(true);
     pictureElement.querySelector('.picture__img').src = url;
     pictureElement.querySelector('.picture__img').alt = description;
     pictureElement.querySelector('.picture__likes').textContent = likes;
