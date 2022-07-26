@@ -25,9 +25,8 @@ const getRandomUniquePhotos = (photos) => {
 };
 
 const getDiscussedPhotos = (photos) => {
-  console.log(1);
-  photos.slice().sort((currentPhoto, nextPhoto) => nextPhoto.comments.length - currentPhoto.comments.length);
-  console.log(2);
+  const discussedPhoto = photos.slice().sort((currentPhoto, nextPhoto) => nextPhoto.comments.length - currentPhoto.comments.length);
+  return discussedPhoto;
 };
 
 const changeActiveClass = (evt) => {
