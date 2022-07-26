@@ -6,14 +6,12 @@ import {createSlider, destroySlider } from './effect-photo.js';
 import { validateUploadForm } from './validate-form.js';
 import { sendData } from './api.js';
 import {showStatusModal} from './status-upload.js';
-
-const DEFAULT_IMAGE = 'img/upload-default-image.jpg';
+import { uploadNewPhoto } from './upload-photo.js';
 
 const imgUpLoadFormElement = document.querySelector('.img-upload__form');
 const upLoadFileInputElement = imgUpLoadFormElement.querySelector('#upload-file');
 const imgUpLoadOverLayElement = imgUpLoadFormElement.querySelector('.img-upload__overlay');
 const imgUpLoadCancelBtnElement = imgUpLoadOverLayElement.querySelector('#upload-cancel');
-const imgUpLoadPreviewElement = imgUpLoadOverLayElement.querySelector('.img-upload__preview img');
 const textCommentsElement  = imgUpLoadOverLayElement.querySelector('.text__description');
 const hashtagsInputElement = imgUpLoadFormElement.querySelector('.text__hashtags');
 const imgUpLoadSubmitBtnElement = imgUpLoadFormElement.querySelector('.img-upload__submit');
@@ -37,6 +35,7 @@ const openUpLoadModal = () => {
   scaleControlBiggerBtnElement.addEventListener('click', decreaseScalePhoto);
   scaleControlSmallerBtnElement.addEventListener('click', increaseScalePhoto);
   document.addEventListener('keydown', onUpLoadModalEscKeydown);
+  uploadNewPhoto();
 };
 
 
@@ -51,7 +50,6 @@ function closeUpLoadModal() {
   document.removeEventListener('keydown', onUpLoadModalEscKeydown);
   imgUpLoadFormElement.reset();
   upLoadFileInputElement.value = '';
-  imgUpLoadPreviewElement.src = DEFAULT_IMAGE;
 }
 
 imgUpLoadCancelBtnElement.addEventListener('click', () => {
