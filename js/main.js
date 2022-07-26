@@ -3,6 +3,7 @@ import { getData } from './api.js';
 import {initPicture} from './pictures.js';
 import { showAlert } from './util.js';
 import {setUserModalSubmit} from './user-modal.js';
+import {addFilter} from './filters';
 
 getData(
   (photos) => {
@@ -14,3 +15,4 @@ getData(
 );
 
 setUserModalSubmit();
+addFilter();
