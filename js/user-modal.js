@@ -8,13 +8,10 @@ import { sendData } from './api.js';
 import {showStatusModal} from './status-upload.js';
 import { uploadNewPhoto } from './upload-photo.js';
 
-const DEFAULT_IMAGE = 'img/upload-default-image.jpg';
-
 const imgUpLoadFormElement = document.querySelector('.img-upload__form');
 const upLoadFileInputElement = imgUpLoadFormElement.querySelector('#upload-file');
 const imgUpLoadOverLayElement = imgUpLoadFormElement.querySelector('.img-upload__overlay');
 const imgUpLoadCancelBtnElement = imgUpLoadOverLayElement.querySelector('#upload-cancel');
-const imgUpLoadPreviewElement = imgUpLoadOverLayElement.querySelector('.img-upload__preview img');
 const textCommentsElement  = imgUpLoadOverLayElement.querySelector('.text__description');
 const hashtagsInputElement = imgUpLoadFormElement.querySelector('.text__hashtags');
 const imgUpLoadSubmitBtnElement = imgUpLoadFormElement.querySelector('.img-upload__submit');
