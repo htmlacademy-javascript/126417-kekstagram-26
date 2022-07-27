@@ -1,6 +1,6 @@
 import { isEscapeKey } from './util.js';
 import { bodyElement } from './big-picture.js';
-import {scaleControlBiggerBtnElement, scaleControlSmallerBtnElement,
+import {scaleControlBiggerBtnElement, scaleControlSmallerBtnElement, setDefaultPhotoScale,
   increaseScalePhoto, decreaseScalePhoto} from './scale-photo.js';
 import {createSlider, destroySlider } from './effect-photo.js';
 import { validateUploadForm } from './validate-form.js';
@@ -31,6 +31,7 @@ const onUpLoadModalEscKeydown = (evt) => {
 const openUpLoadModal = () => {
   imgUpLoadOverLayElement.classList.remove('hidden');
   bodyElement.classList.add('.modal-open');
+  setDefaultPhotoScale();
   createSlider();
   scaleControlBiggerBtnElement.addEventListener('click', decreaseScalePhoto);
   scaleControlSmallerBtnElement.addEventListener('click', increaseScalePhoto);

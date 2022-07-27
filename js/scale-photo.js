@@ -7,6 +7,15 @@ const scaleControlSmallerBtnElement = imgUpLoadScaleElement.querySelector('.scal
 const scaleControlBiggerBtnElement = imgUpLoadScaleElement.querySelector('.scale__control--bigger');
 const imgUpLoadPreviewElement = document.querySelector('.img-upload__preview img');
 
+
+let value = MAX_SCALE;
+
+const setDefaultPhotoScale = () => {
+  value = MAX_SCALE;
+  imgUpLoadPreviewElement.style.transform = `scale(${value / 100})`;
+  scaleControlValueElement.value = `${value}%`;
+};
+
 const increaseScalePhoto = () => {
   let scaleValue = Number(scaleControlValueElement.value.replace('%', ''));
   if (scaleValue > MIN_SCALE) {
@@ -25,4 +34,4 @@ const decreaseScalePhoto = () => {
   }
 };
 
-export {scaleControlBiggerBtnElement, scaleControlSmallerBtnElement, increaseScalePhoto, decreaseScalePhoto};
+export {scaleControlBiggerBtnElement, scaleControlSmallerBtnElement, setDefaultPhotoScale, increaseScalePhoto, decreaseScalePhoto};
