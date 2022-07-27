@@ -54,4 +54,4 @@ pristine.addValidator(textCommentsElement, checkLengthComment,
 
 const validateUploadForm = () => pristine.validate();
 
-export {validateUploadForm};
+export {validateUploadForm, pristine};

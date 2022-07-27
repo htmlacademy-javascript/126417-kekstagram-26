@@ -3,7 +3,7 @@ import { bodyElement } from './big-picture.js';
 import {scaleControlBiggerBtnElement, scaleControlSmallerBtnElement, setDefaultPhotoScale,
   increaseScalePhoto, decreaseScalePhoto} from './scale-photo.js';
 import {createSlider, destroySlider } from './effect-photo.js';
-import { validateUploadForm } from './validate-form.js';
+import { validateUploadForm, pristine } from './validate-form.js';
 import { sendData } from './api.js';
 import {showStatusModal} from './status-upload.js';
 import { uploadNewPhoto } from './upload-photo.js';
@@ -31,7 +31,6 @@ const onUpLoadModalEscKeydown = (evt) => {
 const openUpLoadModal = () => {
   imgUpLoadOverLayElement.classList.remove('hidden');
   bodyElement.classList.add('.modal-open');
-  setDefaultPhotoScale();
   createSlider();
   scaleControlBiggerBtnElement.addEventListener('click', decreaseScalePhoto);
   scaleControlSmallerBtnElement.addEventListener('click', increaseScalePhoto);
@@ -45,12 +44,16 @@ upLoadFileInputElement.addEventListener('change', openUpLoadModal);
 function closeUpLoadModal() {
   imgUpLoadOverLayElement.classList.add('hidden');
   bodyElement.classList.remove('.modal-open');
+  setDefaultPhotoScale();
   destroySlider();
   scaleControlBiggerBtnElement.removeEventListener('click', decreaseScalePhoto);
   scaleControlSmallerBtnElement.removeEventListener('click', increaseScalePhoto);
   document.removeEventListener('keydown', onUpLoadModalEscKeydown);
   imgUpLoadFormElement.reset();
   upLoadFileInputElement.value = '';
+  hashtagsInputElement.value = '';
+  textCommentsElement.value = '';
+  pristine.reset();
 }
 
 imgUpLoadCancelBtnElement.addEventListener('click', () => {
