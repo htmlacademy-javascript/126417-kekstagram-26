@@ -28,17 +28,16 @@ const openBigPicture = () => {
   commentsLoaderElement.classList.add('.hidden');
 
   document.addEventListener('keydown', onBigPictureEscKeydown);
+  closeBigPictureBtnElement.addEventListener('click', closeBigPicture);
 };
 
 function closeBigPicture() {
   bigPictureElement.classList.add('hidden');
   bodyElement.classList.remove('.modal-open');
-  document.removeEventListener('keydown', onBigPictureEscKeydown);
-}
 
-closeBigPictureBtnElement.addEventListener('click', () => {
-  closeBigPicture();
-});
+  document.removeEventListener('keydown', onBigPictureEscKeydown);
+  closeBigPictureBtnElement.removeEventListener('click', closeBigPicture);
+}
 
 const createCommentsList = (comments) => {
   const commentFragmentElement = document.createDocumentFragment();
@@ -59,6 +58,12 @@ const createCommentsList = (comments) => {
   commentsContainerElement.append(commentFragmentElement);
 };
 
+
+const onCommentsLoaderBtnClick = () => {
+
+};
+
+
 const createLoadingCommentsList = (comments) => {
   commentsContainerElement.textContent = '';
   commentsLoaderBtnElement.classList.remove('hidden');
@@ -74,14 +79,14 @@ const createLoadingCommentsList = (comments) => {
   }
 
   const appendComments = () => {
-    if (commentsChunks.length <= i) {
-      commentsLoaderBtnElement.classList.add('hidden');
-      commentsLoaderBtnElement.removeEventListener('click', appendComments);
-    }
     createCommentsList(commentsChunks[i]);
     loadingCommentsLength += commentsChunks[i].length;
     i++;
     commentsCounterElement.textContent = `${loadingCommentsLength} из ${getCorrectWord(comments.length)}`;
+    if (commentsChunks.length <= i) {
+      commentsLoaderBtnElement.classList.add('hidden');
+      commentsLoaderBtnElement.removeEventListener('click', appendComments);
+    }
   };
 
   commentsLoaderBtnElement.addEventListener('click', appendComments);

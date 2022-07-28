@@ -21,10 +21,11 @@ const onUpLoadModalEscKeydown = (evt) => {
     evt.preventDefault();
 
     if (document.activeElement === hashtagsInputElement ||
-      document.activeElement === textCommentsElement || document.activeElement !== errorModalElement) {
+      document.activeElement === textCommentsElement) {
       evt.stopPropagation();
     } else {
       closeUpLoadModal();
+      console.log(2);
     }
   }
 };
@@ -62,12 +63,12 @@ imgUpLoadCancelBtnElement.addEventListener('click', () => {
 
 
 const blockSubmitButton = () => {
-  imgUpLoadSubmitBtnElement.setAttribute('disabled', true);
+  imgUpLoadSubmitBtnElement.disabled = true;
   imgUpLoadSubmitBtnElement.textContent = 'Публикую...';
 };
 
 const unblockSubmitButton = () => {
-  imgUpLoadSubmitBtnElement.removeAttribute('disabled');
+  imgUpLoadSubmitBtnElement.disabled = false;
   imgUpLoadSubmitBtnElement.textContent = 'Опубликовать';
 };
 

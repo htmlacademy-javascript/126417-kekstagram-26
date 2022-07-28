@@ -14,13 +14,16 @@ const bodyElement = document.querySelector('body');
 const onSuccessModalEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
+    evt.stopImmediatePropagation();
     closeSuccessMessageModal();
   }
 };
 
 const onErrorModalEscKeydown = (evt) => {
+  evt.stopPropagation();
   if (isEscapeKey(evt)) {
     evt.preventDefault();
+
     closeErrorMessageModal();
   }
 };

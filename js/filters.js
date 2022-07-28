@@ -13,15 +13,17 @@ const getDefaultPhotos = (photos) => photos.slice();
 const getRandomUniquePhotos = (photos) => {
   const minIndex = MIN_UNIQUE_PHOTOS_COUNT - 1;
   const maxIndex = photos.length - 1;
-  const uniquePhotos = [];
 
-  const uniquePhotosIndexs = getRandomUniqueIntegerArray(minIndex, maxIndex);
+  const uniqueIntegers = getRandomUniqueIntegerArray(minIndex, maxIndex);
 
-  for (let i = 0; i < uniquePhotosIndexs.length; i++) {
-    uniquePhotos.push(photos[i]);
-  }
+  const uniquePhotos = uniqueIntegers
+    .map((integer) => {
+      const photoIndex = integer;
+      return photos[photoIndex];
+    })
+    .slice(MIN_UNIQUE_PHOTOS_COUNT - 1, MAX_UNIQUE_PHOTOS_COUNT);
 
-  return uniquePhotos.slice(MIN_UNIQUE_PHOTOS_COUNT, MAX_UNIQUE_PHOTOS_COUNT + 1);
+  return uniquePhotos;
 };
 
 const getDiscussedPhotos = (photos) => {
