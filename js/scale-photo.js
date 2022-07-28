@@ -16,7 +16,7 @@ const setDefaultPhotoScale = () => {
   scaleControlValueElement.value = `${value}%`;
 };
 
-const increaseScalePhoto = () => {
+const onIncreaseScalePhotoClick = () => {
   let scaleValue = Number(scaleControlValueElement.value.replace('%', ''));
   if (scaleValue > MIN_SCALE) {
     scaleValue -= STEP_SCALE;
@@ -25,7 +25,7 @@ const increaseScalePhoto = () => {
   }
 };
 
-const decreaseScalePhoto = () => {
+const onDecreaseScalePhotoClick = () => {
   let scaleValue = Number(scaleControlValueElement.value.replace('%', ''));
   if (scaleValue < MAX_SCALE ) {
     scaleValue += STEP_SCALE;
@@ -34,4 +34,4 @@ const decreaseScalePhoto = () => {
   }
 };
 
-export {scaleControlBiggerBtnElement, scaleControlSmallerBtnElement, setDefaultPhotoScale, increaseScalePhoto, decreaseScalePhoto};
+export {scaleControlBiggerBtnElement, scaleControlSmallerBtnElement, setDefaultPhotoScale, onIncreaseScalePhotoClick, onDecreaseScalePhotoClick};

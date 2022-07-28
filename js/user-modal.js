@@ -1,7 +1,7 @@
 import { isEscapeKey } from './util.js';
 import { bodyElement } from './big-picture.js';
 import {scaleControlBiggerBtnElement, scaleControlSmallerBtnElement, setDefaultPhotoScale,
-  increaseScalePhoto, decreaseScalePhoto} from './scale-photo.js';
+  onIncreaseScalePhotoClick, onDecreaseScalePhotoClick} from './scale-photo.js';
 import {createSlider, destroySlider } from './effect-photo.js';
 import { validateUploadForm, pristine } from './validate-form.js';
 import { sendData } from './api.js';
@@ -30,9 +30,10 @@ const openUpLoadModal = () => {
   imgUpLoadOverLayElement.classList.remove('hidden');
   bodyElement.classList.add('.modal-open');
   createSlider();
-  scaleControlBiggerBtnElement.addEventListener('click', decreaseScalePhoto);
-  scaleControlSmallerBtnElement.addEventListener('click', increaseScalePhoto);
+  scaleControlBiggerBtnElement.addEventListener('click', onDecreaseScalePhotoClick);
+  scaleControlSmallerBtnElement.addEventListener('click', onIncreaseScalePhotoClick);
   document.addEventListener('keydown', onUpLoadModalEscKeydown);
+  imgUpLoadCancelBtnElement.addEventListener('click', closeUpLoadModal);
   uploadNewPhoto();
 };
 
@@ -43,9 +44,10 @@ function closeUpLoadModal() {
   bodyElement.classList.remove('.modal-open');
   setDefaultPhotoScale();
   destroySlider();
-  scaleControlBiggerBtnElement.removeEventListener('click', decreaseScalePhoto);
-  scaleControlSmallerBtnElement.removeEventListener('click', increaseScalePhoto);
+  scaleControlBiggerBtnElement.removeEventListener('click', onDecreaseScalePhotoClick);
+  scaleControlSmallerBtnElement.removeEventListener('click', onIncreaseScalePhotoClick);
   document.removeEventListener('keydown', onUpLoadModalEscKeydown);
+  imgUpLoadCancelBtnElement.removeEventListener('click', closeUpLoadModal);
   imgUpLoadFormElement.reset();
   upLoadFileInputElement.value = '';
   hashtagsInputElement.value = '';
@@ -53,9 +55,9 @@ function closeUpLoadModal() {
   pristine.reset();
 }
 
-imgUpLoadCancelBtnElement.addEventListener('click', () => {
-  closeUpLoadModal();
-});
+// imgUpLoadCancelBtnElement.addEventListener('click', () => {
+//   closeUpLoadModal();
+// });
 
 
 const blockSubmitButton = () => {

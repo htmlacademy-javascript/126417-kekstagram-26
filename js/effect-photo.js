@@ -108,7 +108,7 @@ const loadEffect = (effectName) => {
   applyEffectClass(effectName);
 };
 
-const updateEffectValue = () => {
+const onEffectValueUpdate = () => {
   if (effect.filter === 'none') {
     sliderContainerElement.classList.add('hidden');
 
@@ -121,7 +121,7 @@ const updateEffectValue = () => {
   }
 };
 
-const changeTargetEffect = (evt) => {
+const onTargetEffectChange = (evt) => {
   loadEffect(evt.target.value);
 };
 
@@ -138,15 +138,15 @@ const createSlider = () => {
 
   loadEffect('none');
 
-  sliderElement.noUiSlider.on('update', updateEffectValue);
-  effectsListElement.addEventListener('change', changeTargetEffect);
+  sliderElement.noUiSlider.on('update', onEffectValueUpdate);
+  effectsListElement.addEventListener('change', onTargetEffectChange);
 };
 
 const destroySlider = () => {
   sliderElement.noUiSlider.off('update');
   sliderElement.noUiSlider.destroy();
 
-  effectsListElement.removeEventListener('change', changeTargetEffect);
+  effectsListElement.removeEventListener('change', onTargetEffectChange);
 };
 
 export {createSlider, destroySlider};
