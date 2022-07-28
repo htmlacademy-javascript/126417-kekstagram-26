@@ -10,7 +10,7 @@ const getData = (onSuccess, onError) => {
 };
 
 const sendData = async(onSuccess, onError, body) => {
-  fetch('https://26.javascript.pages.academy/kekstagram',
+  fetch('https://26.javascript.pages.academy/kekstagra',
     {
       method: 'POST',
       body
