@@ -67,7 +67,7 @@ const blockSubmitButton = () => {
 };
 
 const unblockSubmitButton = () => {
-  imgUpLoadSubmitBtnElement.removeAttribute('disabled', true);
+  imgUpLoadSubmitBtnElement.removeAttribute('disabled');
   imgUpLoadSubmitBtnElement.textContent = 'Опубликовать';
 };
 

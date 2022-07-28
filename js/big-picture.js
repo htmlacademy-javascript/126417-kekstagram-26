@@ -28,7 +28,6 @@ const openBigPicture = () => {
   commentsLoaderElement.classList.add('.hidden');
 
   document.addEventListener('keydown', onBigPictureEscKeydown);
-
 };
 
 function closeBigPicture() {
@@ -75,18 +74,17 @@ const createLoadingCommentsList = (comments) => {
   }
 
   const appendComments = () => {
-    createCommentsList(commentsChunks[i]);
-    loadingCommentsLength += commentsChunks[i].length;
-    i++;
     if (commentsChunks.length <= i) {
       commentsLoaderBtnElement.classList.add('hidden');
       commentsLoaderBtnElement.removeEventListener('click', appendComments);
     }
+    createCommentsList(commentsChunks[i]);
+    loadingCommentsLength += commentsChunks[i].length;
+    i++;
     commentsCounterElement.textContent = `${loadingCommentsLength} из ${getCorrectWord(comments.length)}`;
   };
 
   commentsLoaderBtnElement.addEventListener('click', appendComments);
-
   appendComments();
 };
 
