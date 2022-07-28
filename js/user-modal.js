@@ -5,7 +5,7 @@ import {scaleControlBiggerBtnElement, scaleControlSmallerBtnElement, setDefaultP
 import {createSlider, destroySlider } from './effect-photo.js';
 import { validateUploadForm, pristine } from './validate-form.js';
 import { sendData } from './api.js';
-import {showSuccessModal, showErrorModal, errorModalElement} from './status-upload.js';
+import {showSuccessModal, showErrorModal} from './status-upload.js';
 import { uploadNewPhoto } from './upload-photo.js';
 
 const imgUpLoadFormElement = document.querySelector('.img-upload__form');
@@ -17,17 +17,13 @@ const hashtagsInputElement = imgUpLoadFormElement.querySelector('.text__hashtags
 const imgUpLoadSubmitBtnElement = imgUpLoadFormElement.querySelector('.img-upload__submit');
 
 const onUpLoadModalEscKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-
-    if (document.activeElement === hashtagsInputElement ||
-      document.activeElement === textCommentsElement) {
-      evt.stopPropagation();
-    } else {
-      closeUpLoadModal();
-      console.log(2);
-    }
+  if (!isEscapeKey(evt)) {
+    return;
   }
+  if (evt.target.matches('input') && evt.target.type === 'text' || evt.target.matches('textarea')) {
+    return;
+  }
+  closeUpLoadModal();
 };
 
 const openUpLoadModal = () => {

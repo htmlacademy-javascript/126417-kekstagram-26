@@ -58,12 +58,6 @@ const createCommentsList = (comments) => {
   commentsContainerElement.append(commentFragmentElement);
 };
 
-
-const onCommentsLoaderBtnClick = () => {
-
-};
-
-
 const createLoadingCommentsList = (comments) => {
   commentsContainerElement.textContent = '';
   commentsLoaderBtnElement.classList.remove('hidden');

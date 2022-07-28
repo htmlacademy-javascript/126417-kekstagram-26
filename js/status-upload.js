@@ -20,10 +20,9 @@ const onSuccessModalEscKeydown = (evt) => {
 };
 
 const onErrorModalEscKeydown = (evt) => {
-  evt.stopPropagation();
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-
+    evt.stopImmediatePropagation();
     closeErrorMessageModal();
   }
 };
@@ -57,9 +56,9 @@ const showSuccessModal = () => {
 
   bodyElement.append(successModalElement);
 
-  document.addEventListener('keydown', onSuccessModalEscKeydown);
+  document.addEventListener('keydown', onSuccessModalEscKeydown, true);
   document.addEventListener('click', onSuccessBackDropClick);
-  successButtonElement.addEventListener('click', closeSuccessMessageModal);
+  successButtonElement.addEventListener('click', closeSuccessMessageModal, {once: true});
 };
 
 const showErrorModal = () => {
@@ -67,9 +66,9 @@ const showErrorModal = () => {
 
   bodyElement.append(errorModalElement);
 
-  document.addEventListener('keydown', onErrorModalEscKeydown);
+  document.addEventListener('keydown', onErrorModalEscKeydown, true);
   document.addEventListener('click', onErrorBackDropClick);
-  errorButtonElement.addEventListener('click', closeErrorMessageModal);
+  errorButtonElement.addEventListener('click', closeErrorMessageModal, {once: true});
 };
 
 export {showSuccessModal, showErrorModal, errorModalElement};
