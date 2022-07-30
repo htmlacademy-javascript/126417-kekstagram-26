@@ -31,7 +31,7 @@ const getDiscussedPhotos = (photos) => {
   return discussedPhoto;
 };
 
-const changeActiveClass = (evt) => {
+const onChangeActiveClassClick = (evt) => {
   imgFiltersButtonsElement.forEach((button) => {
     button.classList.remove('img-filters__button--active');
   });
@@ -58,7 +58,7 @@ const applyFilter = (photos) => {
   imgFiltersElement.classList.remove('img-filters--inactive');
 
   imgFiltersButtonsElement.forEach((button) => {
-    button.addEventListener('click', changeActiveClass);
+    button.addEventListener('click', onChangeActiveClassClick);
   });
 
   imgFiltersDefaultButtonElement.addEventListener('click', () => {

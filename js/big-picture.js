@@ -79,10 +79,10 @@ const createLoadingCommentsList = (comments) => {
     commentsLoaderBtnElement.classList.add('hidden');
   }
 
-  const appendComments = () => {
+  const onCommentsLoaderBtnClick = () => {
     if (commentsChunks.length <= i + 1) {
       commentsLoaderBtnElement.classList.add('hidden');
-      commentsLoaderBtnElement.removeEventListener('click', appendComments);
+      commentsLoaderBtnElement.removeEventListener('click', onCommentsLoaderBtnClick);
     }
     createCommentsList(commentsChunks[i]);
     loadingCommentsLength += commentsChunks[i].length;
@@ -90,10 +90,10 @@ const createLoadingCommentsList = (comments) => {
     commentsCounterElement.textContent = `${loadingCommentsLength} из ${getCorrectWord(comments.length)}`;
   };
 
-  commentsLoaderBtnElement.addEventListener('click', appendComments);
-  appendComments();
+  commentsLoaderBtnElement.addEventListener('click', onCommentsLoaderBtnClick);
+  onCommentsLoaderBtnClick();
 
-  onLastCommentsLoaderBtnClick = appendComments;
+  onLastCommentsLoaderBtnClick = onCommentsLoaderBtnClick;
 };
 
 const fillDataBigPicture = ({url, description, likes}) => {
