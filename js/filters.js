@@ -30,11 +30,6 @@ const getDiscussedPhotos = (photos) => {
   return discussedPhoto;
 };
 
-const removeActiveClass = () => {
-  const activeButton = document.querySelector('.img-filters__button--active');
-  activeButton.classList.remove('img-filters__button--active');
-};
-
 const clearPhotos = () => {
   const pictureElements = document.querySelectorAll('.picture');
 
@@ -48,32 +43,30 @@ const updatePhotos = (photos) => {
   initPictures(photos);
 };
 
+const changeFilterStyle = (activeFilterName) => {
+  if (!imgFiltersElement.querySelector(`#filter-${activeFilterName}`).classList.contains('img-filters__button--active')) {
+    imgFiltersElement.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
+    imgFiltersElement.querySelector(`#filter-${activeFilterName}`).classList.add('img-filters__button--active');
+  }
+};
+
 const applyFilter = (photos) => {
   imgFiltersElement.classList.remove('img-filters--inactive');
 
-  imgFiltersDefaultButtonElement.addEventListener('click', debounce((evt) => {
-    removeActiveClass();
-    if (evt.target === imgFiltersDefaultButtonElement) {
-      imgFiltersDefaultButtonElement.classList.add('img-filters__button--active');
-    }
+  imgFiltersDefaultButtonElement.addEventListener('click', debounce(() => {
+    changeFilterStyle('default');
     updatePhotos(getDefaultPhotos(photos));
-  }));
+  }, RERENDER_DELAY));
 
-  imgFiltersRandomButtonElement.addEventListener('click', debounce((evt) => {
-    removeActiveClass();
-    if (evt.target === imgFiltersRandomButtonElement) {
-      imgFiltersRandomButtonElement.classList.add('img-filters__button--active');
-    }
+  imgFiltersRandomButtonElement.addEventListener('click', debounce(() => {
+    changeFilterStyle('random');
     updatePhotos(getRandomUniquePhotos(photos));
-  }));
+  }, RERENDER_DELAY));
 
-  imgFiltersDiscussedButtonElement.addEventListener('click', debounce((evt) => {
-    removeActiveClass();
-    if (evt.target === imgFiltersDiscussedButtonElement) {
-      imgFiltersDiscussedButtonElement.classList.add('img-filters__button--active');
-    }
+  imgFiltersDiscussedButtonElement.addEventListener('click', debounce(() => {
+    changeFilterStyle('discussed');
     updatePhotos(getDiscussedPhotos(photos));
-  }));
+  }, RERENDER_DELAY));
 };
 
 export {applyFilter};

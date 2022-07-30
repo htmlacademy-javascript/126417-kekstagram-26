@@ -55,11 +55,6 @@ function closeUpLoadModal() {
   pristine.reset();
 }
 
-// imgUpLoadCancelBtnElement.addEventListener('click', () => {
-//   closeUpLoadModal();
-// });
-
-
 const blockSubmitButton = () => {
   imgUpLoadSubmitBtnElement.disabled = true;
   imgUpLoadSubmitBtnElement.textContent = 'Публикую...';
