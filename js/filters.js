@@ -3,7 +3,6 @@ import {MIN_UNIQUE_PHOTOS_COUNT, MAX_UNIQUE_PHOTOS_COUNT, RERENDER_DELAY} from '
 import {initPictures} from './pictures.js';
 
 const imgFiltersElement = document.querySelector('.img-filters');
-const imgFiltersButtonsElement = imgFiltersElement.querySelectorAll('.img-filters__button');
 const imgFiltersDefaultButtonElement = imgFiltersElement.querySelector('#filter-default');
 const imgFiltersRandomButtonElement = imgFiltersElement.querySelector('#filter-random');
 const imgFiltersDiscussedButtonElement = imgFiltersElement.querySelector('#filter-discussed');
@@ -31,12 +30,9 @@ const getDiscussedPhotos = (photos) => {
   return discussedPhoto;
 };
 
-const onChangeActiveClassClick = (evt) => {
-  imgFiltersButtonsElement.forEach((button) => {
-    button.classList.remove('img-filters__button--active');
-  });
-
-  evt.target.classList.add('img-filters__button--active');
+const removeActiveClass = () => {
+  const activeButton = document.querySelector('.img-filters__button--active');
+  activeButton.classList.remove('img-filters__button--active');
 };
 
 const clearPhotos = () => {
@@ -52,26 +48,32 @@ const updatePhotos = (photos) => {
   initPictures(photos);
 };
 
-const debouncePhotos = debounce(updatePhotos, RERENDER_DELAY);
-
 const applyFilter = (photos) => {
   imgFiltersElement.classList.remove('img-filters--inactive');
 
-  imgFiltersButtonsElement.forEach((button) => {
-    button.addEventListener('click', onChangeActiveClassClick);
-  });
+  imgFiltersDefaultButtonElement.addEventListener('click', debounce((evt) => {
+    removeActiveClass();
+    if (evt.target === imgFiltersDefaultButtonElement) {
+      imgFiltersDefaultButtonElement.classList.add('img-filters__button--active');
+    }
+    updatePhotos(getDefaultPhotos(photos));
+  }));
 
-  imgFiltersDefaultButtonElement.addEventListener('click', () => {
-    debouncePhotos(getDefaultPhotos(photos));
-  });
+  imgFiltersRandomButtonElement.addEventListener('click', debounce((evt) => {
+    removeActiveClass();
+    if (evt.target === imgFiltersRandomButtonElement) {
+      imgFiltersRandomButtonElement.classList.add('img-filters__button--active');
+    }
+    updatePhotos(getRandomUniquePhotos(photos));
+  }));
 
-  imgFiltersRandomButtonElement.addEventListener('click', () => {
-    debouncePhotos(getRandomUniquePhotos(photos));
-  });
-
-  imgFiltersDiscussedButtonElement.addEventListener('click', () => {
-    debouncePhotos(getDiscussedPhotos(photos));
-  });
+  imgFiltersDiscussedButtonElement.addEventListener('click', debounce((evt) => {
+    removeActiveClass();
+    if (evt.target === imgFiltersDiscussedButtonElement) {
+      imgFiltersDiscussedButtonElement.classList.add('img-filters__button--active');
+    }
+    updatePhotos(getDiscussedPhotos(photos));
+  }));
 };
 
 export {applyFilter};
