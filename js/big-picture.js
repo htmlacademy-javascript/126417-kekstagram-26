@@ -14,6 +14,8 @@ const commentsLoaderElement = bigPictureElement.querySelector('.comments-loader'
 const closeBigPictureBtnElement = bigPictureElement.querySelector('#picture-cancel');
 const commentsLoaderBtnElement = bigPictureElement.querySelector('.social__comments-loader');
 
+let onLastCommentsLoaderBtnClick = null;
+
 const onBigPictureEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -28,13 +30,16 @@ const openBigPicture = () => {
   commentsLoaderElement.classList.add('.hidden');
 
   document.addEventListener('keydown', onBigPictureEscKeydown);
-
 };
 
 function closeBigPicture() {
   bigPictureElement.classList.add('hidden');
   bodyElement.classList.remove('.modal-open');
   document.removeEventListener('keydown', onBigPictureEscKeydown);
+
+  if (onLastCommentsLoaderBtnClick !== null) {
+    commentsLoaderBtnElement.removeEventListener('click', onLastCommentsLoaderBtnClick);
+  }
 }
 
 closeBigPictureBtnElement.addEventListener('click', () => {
@@ -74,20 +79,21 @@ const createLoadingCommentsList = (comments) => {
     commentsLoaderBtnElement.classList.add('hidden');
   }
 
-  const appendComments = () => {
+  const onCommentsLoaderBtnClick = () => {
+    if (commentsChunks.length <= i + 1) {
+      commentsLoaderBtnElement.classList.add('hidden');
+      commentsLoaderBtnElement.removeEventListener('click', onCommentsLoaderBtnClick);
+    }
     createCommentsList(commentsChunks[i]);
     loadingCommentsLength += commentsChunks[i].length;
     i++;
-    if (commentsChunks.length <= i) {
-      commentsLoaderBtnElement.classList.add('hidden');
-      commentsLoaderBtnElement.removeEventListener('click', appendComments);
-    }
     commentsCounterElement.textContent = `${loadingCommentsLength} из ${getCorrectWord(comments.length)}`;
   };
 
-  commentsLoaderBtnElement.addEventListener('click', appendComments);
+  commentsLoaderBtnElement.addEventListener('click', onCommentsLoaderBtnClick);
+  onCommentsLoaderBtnClick();
 
-  appendComments();
+  onLastCommentsLoaderBtnClick = onCommentsLoaderBtnClick;
 };
 
 const fillDataBigPicture = ({url, description, likes}) => {

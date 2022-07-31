@@ -3,7 +3,6 @@ import {MIN_UNIQUE_PHOTOS_COUNT, MAX_UNIQUE_PHOTOS_COUNT, RERENDER_DELAY} from '
 import {initPictures} from './pictures.js';
 
 const imgFiltersElement = document.querySelector('.img-filters');
-const imgFiltersButtonsElement = imgFiltersElement.querySelectorAll('.img-filters__button');
 const imgFiltersDefaultButtonElement = imgFiltersElement.querySelector('#filter-default');
 const imgFiltersRandomButtonElement = imgFiltersElement.querySelector('#filter-random');
 const imgFiltersDiscussedButtonElement = imgFiltersElement.querySelector('#filter-discussed');
@@ -13,28 +12,22 @@ const getDefaultPhotos = (photos) => photos.slice();
 const getRandomUniquePhotos = (photos) => {
   const minIndex = MIN_UNIQUE_PHOTOS_COUNT - 1;
   const maxIndex = photos.length - 1;
-  const uniquePhotos = [];
 
-  const uniquePhotosIndexs = getRandomUniqueIntegerArray(minIndex, maxIndex);
+  const uniqueIntegers = getRandomUniqueIntegerArray(minIndex, maxIndex);
 
-  for (let i = 0; i < uniquePhotosIndexs.length; i++) {
-    uniquePhotos.push(photos[i]);
-  }
+  const uniquePhotos = uniqueIntegers
+    .map((integer) => {
+      const photoIndex = integer;
+      return photos[photoIndex];
+    })
+    .slice(MIN_UNIQUE_PHOTOS_COUNT - 1, MAX_UNIQUE_PHOTOS_COUNT);
 
-  return uniquePhotos.slice(MIN_UNIQUE_PHOTOS_COUNT, MAX_UNIQUE_PHOTOS_COUNT + 1);
+  return uniquePhotos;
 };
 
 const getDiscussedPhotos = (photos) => {
   const discussedPhoto = photos.slice().sort((currentPhoto, nextPhoto) => nextPhoto.comments.length - currentPhoto.comments.length);
   return discussedPhoto;
-};
-
-const changeActiveClass = (evt) => {
-  imgFiltersButtonsElement.forEach((button) => {
-    button.classList.remove('img-filters__button--active');
-  });
-
-  evt.target.classList.add('img-filters__button--active');
 };
 
 const clearPhotos = () => {
@@ -50,26 +43,30 @@ const updatePhotos = (photos) => {
   initPictures(photos);
 };
 
-const debouncePhotos = debounce(updatePhotos, RERENDER_DELAY);
+const changeFilterStyle = (activeFilterName) => {
+  if (!imgFiltersElement.querySelector(`#filter-${activeFilterName}`).classList.contains('img-filters__button--active')) {
+    imgFiltersElement.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
+    imgFiltersElement.querySelector(`#filter-${activeFilterName}`).classList.add('img-filters__button--active');
+  }
+};
 
 const applyFilter = (photos) => {
   imgFiltersElement.classList.remove('img-filters--inactive');
 
-  imgFiltersButtonsElement.forEach((button) => {
-    button.addEventListener('click', changeActiveClass);
-  });
+  imgFiltersDefaultButtonElement.addEventListener('click', debounce(() => {
+    changeFilterStyle('default');
+    updatePhotos(getDefaultPhotos(photos));
+  }, RERENDER_DELAY));
 
-  imgFiltersDefaultButtonElement.addEventListener('click', () => {
-    debouncePhotos(getDefaultPhotos(photos));
-  });
+  imgFiltersRandomButtonElement.addEventListener('click', debounce(() => {
+    changeFilterStyle('random');
+    updatePhotos(getRandomUniquePhotos(photos));
+  }, RERENDER_DELAY));
 
-  imgFiltersRandomButtonElement.addEventListener('click', () => {
-    debouncePhotos(getRandomUniquePhotos(photos));
-  });
-
-  imgFiltersDiscussedButtonElement.addEventListener('click', () => {
-    debouncePhotos(getDiscussedPhotos(photos));
-  });
+  imgFiltersDiscussedButtonElement.addEventListener('click', debounce(() => {
+    changeFilterStyle('discussed');
+    updatePhotos(getDiscussedPhotos(photos));
+  }, RERENDER_DELAY));
 };
 
 export {applyFilter};

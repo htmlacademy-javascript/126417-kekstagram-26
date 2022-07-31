@@ -1,4 +1,4 @@
-import { ALERT_SHOW_TIME } from './data.js';
+import { ALERT_SHOW_TIME, ESCAPE_KEYDOWN } from './data.js';
 
 const getRandomInteger = (min, max) => {
   let lower = Math.abs(min);
@@ -25,7 +25,7 @@ const getRandomUniqueIntegerArray = (min, max) => {
 
 };
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
+const isEscapeKey = (evt) => evt.key === ESCAPE_KEYDOWN;
 
 const createChunks = (elements, chunkSize) => {
   const result = [];

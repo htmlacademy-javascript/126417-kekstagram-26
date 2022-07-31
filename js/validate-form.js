@@ -1,4 +1,4 @@
-import { MIN_HASHTAGS_COUNT, MAX_HASHTAGS_COUNT, MAX_LENGTH_COMMENT } from './data.js';
+import {MAX_HASHTAGS_COUNT, MAX_HASHTAG_LENGTH, MAX_LENGTH_COMMENT } from './data.js';
 
 const imgUpLoadFormElement = document.querySelector('.img-upload__form');
 const imgUpLoadOverLayElement = imgUpLoadFormElement.querySelector('.img-upload__overlay');
@@ -25,6 +25,12 @@ const validateHashtags = (value) => {
   return value === ''|| hashtags.every((hashtag) => hashtagsRule.test(hashtag));
 };
 
+const validateHashtagLength = (value) => {
+  const hashtags = getHashtags(value);
+
+  return hashtags.every((hashtag) => hashtag.length <= MAX_HASHTAG_LENGTH);
+};
+
 const validateUniqueHashtags = (value) => {
   const hashtags = getHashtags(value);
   const uniqueHashtags = new Set(hashtags);
@@ -37,11 +43,15 @@ const validateHashtagsCount = (value) => {
 };
 
 pristine.addValidator(hashtagsInputElement, validateHashtags,
-  `Хэш-тег должен начинаться с # и содержать хотя бы ${MIN_HASHTAGS_COUNT} символ (буквы и цифры)`);
+  'Каждый хештег должен начинаться с #, состоять из букв и цифр');
+pristine.addValidator(hashtagsInputElement, validateHashtagLength,
+  `Максимальная длина хэш-тега - ${MAX_HASHTAG_LENGTH} символов, включая #`);
 pristine.addValidator(hashtagsInputElement, validateUniqueHashtags, 'Хэш-теги не должны повторяться');
-pristine.addValidator(hashtagsInputElement, validateHashtagsCount, `Нельзя указать больше ${MAX_HASHTAGS_COUNT} хэш-тегов`);
-pristine.addValidator(textCommentsElement, checkLengthComment, `Комментарий не должен быть длиннее ${MAX_LENGTH_COMMENT} символов`);
+pristine.addValidator(hashtagsInputElement, validateHashtagsCount,
+  `Нельзя указать больше ${MAX_HASHTAGS_COUNT} хэш-тегов`);
+pristine.addValidator(textCommentsElement, checkLengthComment,
+  `Комментарий не должен быть длиннее ${MAX_LENGTH_COMMENT} символов`);
 
 const validateUploadForm = () => pristine.validate();
 
-export {validateUploadForm};
+export {validateUploadForm, pristine};

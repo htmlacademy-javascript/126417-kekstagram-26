@@ -1,45 +1,74 @@
 import { isEscapeKey } from './util.js';
 
+const successTemplateElement = document.querySelector('#success').content.querySelector('.success');
+const successModalElement = successTemplateElement.cloneNode(true);
+const successButtonElement = successModalElement.querySelector('.success__button');
+
+const errorTemplateElement = document.querySelector('#error').content.querySelector('.error');
+const errorModalElement = errorTemplateElement.cloneNode(true);
+const errorButtonElement = errorModalElement.querySelector('.error__button');
+
 const Z_INDEX = 10;
 const bodyElement = document.querySelector('body');
 
-const showStatusModal = (type) => {
-  const statusTemplateElement = document.querySelector(`#${type}`)
-    .content.querySelector(`.${type}`);
-  const statusModalElement = statusTemplateElement.cloneNode(true);
-  const statusButtonElement = statusModalElement.querySelector(`.${type}__button`);
-  statusModalElement.style.zIndex = Z_INDEX;
-
-  bodyElement.append(statusModalElement);
-
-  const onStatusModalEscKeydown = (evt) => {
-    if (isEscapeKey(evt)) {
-      if ((document.querySelector(`.${type}`))) {
-        closeStatusMessageModal();
-      }
-    }
-  };
-
-  const onBackDropClick = (evt) => {
-    if (evt.target.className !== `${type}__inner` &&
-      evt.target.className !== `${type}__title`) {
-      closeStatusMessageModal();
-    }
-  };
-
-  statusButtonElement.addEventListener('click', () => {
-    closeStatusMessageModal();
-  });
-
-  document.addEventListener('keydown', onStatusModalEscKeydown);
-  document.addEventListener('click', onBackDropClick);
-
-  function closeStatusMessageModal () {
-    statusModalElement.remove();
-    document.removeEventListener('keydown', onStatusModalEscKeydown);
-    document.removeEventListener('click', onBackDropClick);
-
+const onSuccessModalEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    evt.stopImmediatePropagation();
+    closeSuccessMessageModal();
   }
 };
 
-export {showStatusModal};
+const onErrorModalEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    evt.stopImmediatePropagation();
+    closeErrorMessageModal();
+  }
+};
+
+const onSuccessBackDropClick = (evt) => {
+  if (evt.target === successModalElement) {
+    closeSuccessMessageModal();
+  }
+};
+
+const onErrorBackDropClick = (evt) => {
+  if (evt.target === errorModalElement) {
+    closeErrorMessageModal();
+  }
+};
+
+function closeSuccessMessageModal () {
+  document.removeEventListener('keydown', onSuccessModalEscKeydown);
+  document.removeEventListener('click', onSuccessBackDropClick);
+  successModalElement.remove();
+}
+
+function closeErrorMessageModal () {
+  document.removeEventListener('keydown', onErrorModalEscKeydown);
+  document.removeEventListener('click', onErrorBackDropClick);
+  errorModalElement.remove();
+}
+
+const showSuccessModal = () => {
+  successModalElement.style.zIndex = Z_INDEX;
+
+  bodyElement.append(successModalElement);
+
+  document.addEventListener('keydown', onSuccessModalEscKeydown, true);
+  document.addEventListener('click', onSuccessBackDropClick);
+  successButtonElement.addEventListener('click', closeSuccessMessageModal, {once: true});
+};
+
+const showErrorModal = () => {
+  errorModalElement.style.zIndex = Z_INDEX;
+
+  bodyElement.append(errorModalElement);
+
+  document.addEventListener('keydown', onErrorModalEscKeydown, true);
+  document.addEventListener('click', onErrorBackDropClick);
+  errorButtonElement.addEventListener('click', closeErrorMessageModal, {once: true});
+};
+
+export {showSuccessModal, showErrorModal, errorModalElement};
