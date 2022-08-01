@@ -89,4 +89,4 @@ const setUserModalSubmit = () => {
   });
 };
 
-export {setUserModalSubmit};
+export {setUserModalSubmit, onUpLoadModalEscKeydown};

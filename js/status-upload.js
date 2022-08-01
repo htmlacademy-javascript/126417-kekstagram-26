@@ -1,4 +1,5 @@
 import { isEscapeKey } from './util.js';
+import { onUpLoadModalEscKeydown } from './user-modal.js';
 
 const successTemplateElement = document.querySelector('#success').content.querySelector('.success');
 const successModalElement = successTemplateElement.cloneNode(true);
@@ -48,6 +49,8 @@ function closeSuccessMessageModal () {
 function closeErrorMessageModal () {
   document.removeEventListener('keydown', onErrorModalEscKeydown);
   document.removeEventListener('click', onErrorBackDropClick);
+  document.addEventListener('keydown', onUpLoadModalEscKeydown);
+
   errorModalElement.remove();
 }
 
@@ -56,9 +59,9 @@ const showSuccessModal = () => {
 
   bodyElement.append(successModalElement);
 
-  document.addEventListener('keydown', onSuccessModalEscKeydown, true);
+  document.addEventListener('keydown', onSuccessModalEscKeydown);
   document.addEventListener('click', onSuccessBackDropClick);
-  successButtonElement.addEventListener('click', closeSuccessMessageModal, {once: true});
+  successButtonElement.addEventListener('click', closeSuccessMessageModal);
 };
 
 const showErrorModal = () => {
@@ -66,9 +69,11 @@ const showErrorModal = () => {
 
   bodyElement.append(errorModalElement);
 
-  document.addEventListener('keydown', onErrorModalEscKeydown, true);
+  document.addEventListener('keydown', onErrorModalEscKeydown);
   document.addEventListener('click', onErrorBackDropClick);
-  errorButtonElement.addEventListener('click', closeErrorMessageModal, {once: true});
+  errorButtonElement.addEventListener('click', closeErrorMessageModal);
+  document.removeEventListener('keydown', onUpLoadModalEscKeydown);
+
 };
 
 export {showSuccessModal, showErrorModal, errorModalElement};

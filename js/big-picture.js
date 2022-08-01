@@ -30,21 +30,21 @@ const openBigPicture = () => {
   commentsLoaderElement.classList.add('.hidden');
 
   document.addEventListener('keydown', onBigPictureEscKeydown);
+  closeBigPictureBtnElement.addEventListener('click', closeBigPicture);
+
 };
 
 function closeBigPicture() {
   bigPictureElement.classList.add('hidden');
   bodyElement.classList.remove('.modal-open');
   document.removeEventListener('keydown', onBigPictureEscKeydown);
+  closeBigPictureBtnElement.removeEventListener('click', closeBigPicture);
+
 
   if (onLastCommentsLoaderBtnClick !== null) {
     commentsLoaderBtnElement.removeEventListener('click', onLastCommentsLoaderBtnClick);
   }
 }
-
-closeBigPictureBtnElement.addEventListener('click', () => {
-  closeBigPicture();
-});
 
 const createCommentsList = (comments) => {
   const commentFragmentElement = document.createDocumentFragment();
