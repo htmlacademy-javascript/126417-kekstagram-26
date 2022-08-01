@@ -90,7 +90,9 @@ const effects = {
   }
 };
 
-let effect = effects.none;
+const DEFAULT_EFFECT = 'none';
+
+let selectedEffect = effects.none;
 
 const applyEffectClass = (effectName) => {
   const effectNames = Object.keys(effects);
@@ -101,15 +103,15 @@ const applyEffectClass = (effectName) => {
 };
 
 const loadEffect = (effectName) => {
-  effect = effects[effectName];
+  selectedEffect = effects[effectName];
 
-  sliderElement.noUiSlider.updateOptions(effect.options);
+  sliderElement.noUiSlider.updateOptions(selectedEffect.options);
 
   applyEffectClass(effectName);
 };
 
 const onEffectValueUpdate = () => {
-  if (effect.filter === 'none') {
+  if (selectedEffect.filter === DEFAULT_EFFECT) {
     sliderContainerElement.classList.add('hidden');
 
     imgUpLoadPreviewElement.style.filter = '';
@@ -117,7 +119,7 @@ const onEffectValueUpdate = () => {
     sliderContainerElement.classList.remove('hidden');
 
     effectLevelValueElement.value = sliderElement.noUiSlider.get();
-    imgUpLoadPreviewElement.style.filter = `${effect.filter}(${effectLevelValueElement.value}${effect.measure})`;
+    imgUpLoadPreviewElement.style.filter = `${selectedEffect.filter}(${effectLevelValueElement.value}${selectedEffect.measure})`;
   }
 };
 
@@ -136,7 +138,7 @@ const createSlider = () => {
     connect: 'lower'
   });
 
-  loadEffect('none');
+  loadEffect(DEFAULT_EFFECT);
 
   sliderElement.noUiSlider.on('update', onEffectValueUpdate);
   effectsListElement.addEventListener('change', onTargetEffectChange);
